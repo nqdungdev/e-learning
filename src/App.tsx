@@ -1,25 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import GlobalStyles, { theme } from "GlobalStyles";
+import { ThemeProvider } from "@mui/material";
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ErrorBoundary from "Components/ErrorBoundary/ErrorBoundary";
+import LoadingLazy from "Components/LoadingLazy/LoadingLazy";
+import HomeTemplate from "Templates/HomeTemplate/HomeTemplate";
+import LoginTemplate from "Templates/LoginTemplate/LoginTemplate";
+
+const HomePage = lazy(() => import("Pages/HomePage/HomePage"));
+const LoginPage = lazy(() => import("Pages/LoginPage/LoginPage"));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <Suspense fallback={<LoadingLazy />}>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path="" element={<HomeTemplate />}>
+                <Route index element={<HomePage />} />
+              </Route>
+              <Route path="/login" element={<LoginTemplate />}>
+                <Route index element={<LoginPage />} />
+              </Route>
+              <Route path="*" element={<Navigate to={"/"} />} />
+            </Routes>
+            <GlobalStyles />
+          </ThemeProvider>
+        </BrowserRouter>
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
