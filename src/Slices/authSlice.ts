@@ -19,7 +19,6 @@ export const postLoginUser = createAsyncThunk(
   async (payload: LoginValues) => {
     try {
       const data = userAPI.postLoginUser(payload);
-      localStorage.setItem("user", JSON.stringify(data));
       return data;
     } catch (error) {
       throw error;
@@ -30,21 +29,30 @@ export const postLoginUser = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: (state) => {
+      state.userLogin = null;
+      localStorage.setItem("user", JSON.stringify(null));
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(postLoginUser.pending, (state) => {
       state.isLoginLoading = true;
     });
     builder.addCase(postLoginUser.fulfilled, (state, { payload }) => {
       state.errorLogin = null;
-      state.userLogin = payload;
       state.isLoginLoading = false;
+      state.userLogin = payload;
+      payload === undefined
+        ? localStorage.setItem("user", JSON.stringify(null))
+        : localStorage.setItem("user", JSON.stringify(payload));
     });
     builder.addCase(postLoginUser.rejected, (state, { error }) => {
       state.isLoginLoading = false;
-      state.errorLogin = error as any;
+      state.errorLogin = error.message as string;
     });
   },
 });
+export const { logoutUser } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -61,16 +61,14 @@ const CourseList = (props: Props) => {
   return (
     <Box id="schedule" sx={{ py: 5, bgcolor: "paper.main" }}>
       <Container>
-        <Box sx={{ width: "100%" }}>
-          <TabLabel />
-          <TabPanel>
-            <Slider {...settings}>
-              {courseList?.map((course) => {
-                return <CourseItem key={course.maKhoaHoc} course={course} />;
-              })}
-            </Slider>
-          </TabPanel>
-        </Box>
+        <TabLabel />
+        <TabPanel>
+          <Slider {...settings}>
+            {courseList?.map((course) => {
+              return <CourseItem key={course.maKhoaHoc} course={course} />;
+            })}
+          </Slider>
+        </TabPanel>
       </Container>
     </Box>
   );

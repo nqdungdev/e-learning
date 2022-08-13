@@ -9,6 +9,7 @@ import LoginTemplate from "Templates/LoginTemplate/LoginTemplate";
 
 const HomePage = lazy(() => import("Pages/HomePage/HomePage"));
 const LoginPage = lazy(() => import("Pages/LoginPage/LoginPage"));
+const RegisterPage = lazy(() => import("Pages/RegisterPage/RegisterPage"));
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
               <Route path="" element={<HomeTemplate />}>
                 <Route index element={<HomePage />} />
               </Route>
-              <Route path="/login" element={<LoginTemplate />}>
-                <Route index element={<LoginPage />} />
+              <Route path="/" element={<LoginTemplate />}>
+                <Route path="login" element={<LoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
               </Route>
               <Route path="*" element={<Navigate to={"/"} />} />
             </Routes>

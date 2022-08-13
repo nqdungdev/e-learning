@@ -4,7 +4,7 @@ import {
   LinkFooter,
   TextFooter,
   TitleFooter,
-} from "_Playground/StyledComponents/home.styled";
+} from "_Playground/StyledComponents/HomePage/home.styled";
 
 const Footer = () => {
   return (

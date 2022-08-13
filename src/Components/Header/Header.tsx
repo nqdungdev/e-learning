@@ -15,7 +15,7 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 // import { HeaderAside } from "_Playground/StyledComponents/home.styled";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 // import { Link as LinkScroll } from "react-scroll";
 
 import Logo from "Components/Logo/Logo";
@@ -24,6 +24,8 @@ import { RootState } from "configStore";
 import SweetAlertConfirm from "Components/SweetAlert/SweetAlertConfirm";
 // import { logoutUser } from "Slices/auth";
 import SweetAlertSuccess from "Components/SweetAlert/SweetAlertSuccess";
+import { logoutUser } from "Slices/authSlice";
+import SweetAlert from "react-sweetalert2";
 
 const pages = [
   { name: "Lịch chiếu", id: "schedule" },
@@ -36,40 +38,72 @@ type Props = {};
 
 const Header = (props: Props) => {
   const dispatch = useDispatch<any>();
-  //   const { user } = useSelector((state: RootState) => state.auth);
+  const { userLogin } = useSelector((state: RootState) => state.authSlice);
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [open, setOpen] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
+  const navigate = useNavigate();
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   const handleLogout = () => {
-    // dispatch(logoutUser());
+    dispatch(logoutUser());
     setOpenSuccess(true);
   };
 
   return (
     <AppBar position="fixed" sx={{ height: "5rem" }} color="primary">
+      <SweetAlert
+        show={openConfirm}
+        icon="question"
+        title="Bạn muốn đăng xuất?"
+        confirmButtonText="Đồng ý"
+        cancelButtonText="Hủy bỏ"
+        showCancelButton={true}
+        onConfirm={() => {
+          handleLogout();
+          setOpenSuccess(true);
+        }}
+        didClose={() => {
+          setOpenConfirm(false);
+        }}
+      />
+
+      <SweetAlert
+        show={openSuccess}
+        icon="success"
+        title="Đăng xuất thành công!!!"
+        confirmButtonText="Đồng ý"
+        timer={2000}
+        onConfirm={() => {
+          setOpenSuccess(false);
+        }}
+        didClose={() => {
+          setOpenSuccess(false);
+          navigate("/");
+        }}
+      />
+
       <Container sx={{ height: "100%" }}>
         <Toolbar disableGutters sx={{ height: "100%" }}>
-          <NavLink to={"/"}>
-            <Box
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-              }}
-            >
-              <Logo />
-            </Box>
-          </NavLink>
+          <Box
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+            }}
+          >
+            <Logo />
+          </Box>
+
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -162,7 +196,7 @@ const Header = (props: Props) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {/* {user ? (
+            {userLogin ? (
               <Stack direction="row">
                 <NavLink to={"/user"}>
                   <Stack direction="row">
@@ -182,7 +216,7 @@ const Header = (props: Props) => {
                         },
                       }}
                     >
-                      {user.hoTen}
+                      {userLogin.hoTen}
                     </Typography>
                   </Stack>
                 </NavLink>
@@ -196,14 +230,16 @@ const Header = (props: Props) => {
                       color: "secondary.main",
                     },
                   }}
-                  onClick={handleOpen}
+                  onClick={() => {
+                    setOpenConfirm(true);
+                  }}
                 >
                   Đăng xuất
                 </Typography>
               </Stack>
             ) : (
               <Stack direction="row">
-                <NavLink to={""}>
+                <NavLink to={"/login"}>
                   <Typography
                     sx={{
                       m: 2,
@@ -216,7 +252,7 @@ const Header = (props: Props) => {
                     Đăng nhập
                   </Typography>
                 </NavLink>
-                <NavLink to={""}>
+                <NavLink to={"/register"}>
                   <Typography
                     sx={{
                       m: 2,
@@ -230,35 +266,7 @@ const Header = (props: Props) => {
                   </Typography>
                 </NavLink>
               </Stack>
-            )} */}
-            <Stack direction="row">
-              <NavLink to={""}>
-                <Typography
-                  sx={{
-                    m: 2,
-                    color: "primary.contrastText",
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  Đăng nhập
-                </Typography>
-              </NavLink>
-              <NavLink to={""}>
-                <Typography
-                  sx={{
-                    m: 2,
-                    color: "primary.contrastText",
-                    "&:hover": {
-                      color: "secondary.main",
-                    },
-                  }}
-                >
-                  Đăng ký
-                </Typography>
-              </NavLink>
-            </Stack>
+            )}
           </Box>
         </Toolbar>
       </Container>

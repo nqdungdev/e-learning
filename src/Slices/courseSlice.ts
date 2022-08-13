@@ -17,7 +17,6 @@ export const getCourseCatalog = createAsyncThunk(
   async () => {
     try {
       const data = await courseAPI.getCourseCatalog();
-
       return data;
     } catch (error) {
       throw error;

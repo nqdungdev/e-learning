@@ -1,26 +1,13 @@
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
-import LogoImg from "Assets/img/Logo/LogoImg.png";
-type Props = {};
+import { Stack } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
-const ImageLogo = styled.img`
-  width: 7rem;
-`;
-const StyledLogo = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const Logo = (props: Props) => {
+const Logo = () => {
   return (
-    <StyledLogo>
-      <ImageLogo
-        // src="https://i.pinimg.com/564x/b3/7a/5a/b37a5a8a62db73381b9f2909bdb6545e.jpg"
-        src={LogoImg}
-        alt={LogoImg}
-      />
-    </StyledLogo>
+    <Stack alignItems="center" justifyContent="center">
+      <NavLink to={"/"} style={{ fontSize: "3rem", color: "#fff" }}>
+        Logo
+      </NavLink>
+    </Stack>
   );
 };
 

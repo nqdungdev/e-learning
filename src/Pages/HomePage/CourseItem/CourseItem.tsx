@@ -8,7 +8,10 @@ import {
   Button,
 } from "@mui/material";
 import { Course } from "Interfaces/courseInterface";
-import { TitleText, DescText } from "_Playground/StyledComponents/home.styled";
+import {
+  TitleText,
+  DescText,
+} from "_Playground/StyledComponents/HomePage/home.styled";
 
 type Props = {
   course: Course;
@@ -17,7 +20,7 @@ type Props = {
 const CourseItem = ({ course }: Props) => {
   return (
     <Box sx={{ px: 1 }}>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 250 }}>
         <CardActionArea>
           <CardMedia
             component="img"

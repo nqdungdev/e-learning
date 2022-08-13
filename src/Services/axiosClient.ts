@@ -24,9 +24,9 @@ axiosClient.interceptors.response.use(
   (response) => {
     return response.data;
   },
-  (error: AxiosError<{ content: string }>) => {
-    // if (error.response) return error.response?.data.content;
-    return Promise.reject(error.response?.data.content);
+  (error: AxiosError<{ message: string }>) => {
+    // if (error.response) return error.response?.data;
+    return Promise.reject(error.response?.data);
   }
 );
 export default axiosClient;

@@ -1,7 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import { Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { FieldErrors, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "configStore";
+import { schemaLogin } from "./schemaLogin";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { postLoginUser } from "Slices/authSlice";
+import { LoginValues } from "Interfaces/userInterface";
 import {
   Avatar,
   Button,
@@ -9,36 +14,17 @@ import {
   FormControlLabel,
   Checkbox,
   Link,
-  Grid,
-  Box,
   Typography,
   Container,
   InputAdornment,
   IconButton,
-  Alert,
   CircularProgress,
   Stack,
   FormHelperText,
 } from "@mui/material";
-// import { makeStyles } from "@mui/styles";
-
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { schemaLogin } from "./schemaLogin";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { AppDispatch, RootState } from "configStore";
-import { postLoginUser } from "Slices/authSlice";
-import { LoginValues } from "Interfaces/userInterface";
-// import { makeStyles } from "@mui/styles";
-// import SweetAlert2 from "react-sweetalert2";
-
-type Props = {};
-
-type LocationState = {
-  prevRoute: {
-    pathname: string;
-  };
-};
+import SweetAlert from "react-sweetalert2";
 
 export const handleMouseDownPassword = (
   event: React.MouseEvent<HTMLButtonElement>
@@ -46,16 +32,19 @@ export const handleMouseDownPassword = (
   event.preventDefault();
 };
 
-const LoginPage = (props: Props) => {
-  //   const classes = useStyles();
-  const dispatch = useDispatch<AppDispatch>();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [swalProps, setSwalProps] = useState({});
-
-  //   const { errorLogin, isLoading, user, availableUser } = useSelector(
-  //     (state: RootState) => state.auth
-  //   );
+const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { userLogin, isLoginLoading, errorLogin } = useSelector(
+    (state: RootState) => state.authSlice
+  );
+
   const {
     register,
     handleSubmit,
@@ -68,60 +57,53 @@ const LoginPage = (props: Props) => {
     mode: "onTouched",
     resolver: yupResolver(schemaLogin),
   });
-  const onSuccess = async (values: LoginValues) => {
-    dispatch(postLoginUser(values));
-    // try {
-    //   await dispatch(loginUser(values)).unwrap();
-    //   setModalOpen(true);
-    // } catch (error) {
-    //   // console.log(error);
-    // }
+
+  const onSuccess = (values: LoginValues) => {
+    dispatch(postLoginUser(values))
+      .then((res: any) => {
+        if (res?.error?.message) setOpenError(true);
+        else {
+          setOpenSuccess(true);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
-  const onError = () => {
-    // console.log(error);
+  const onError = (error: FieldErrors<LoginValues>) => {
+    console.log(error);
   };
-
-  const location = useLocation();
-  const navigate = useNavigate();
-  const navigateDestination = () => {
-    if (location.state) {
-      const { prevRoute } = location.state as LocationState;
-      if (prevRoute.pathname === "/form/sign-up") {
-        navigate("/");
-        // dispatch(setAvailableUser());
-        return;
-      }
-    }
-    navigate(-1);
-    // dispatch(setAvailableUser());
-  };
-  useEffect(() => {
-    setSwalProps({
-      show: modalOpen,
-      position: "center",
-      icon: "success",
-      title: "Đăng nhập thành công",
-      showConfirmButton: true,
-      timer: 2500,
-    });
-  }, [modalOpen]);
 
   useEffect(() => {
     document.title = "Đăng nhập";
-    // setAvailableUser(false);
   }, []);
 
-  //   if (user && availableUser) {
-  //     return <Navigate to={"/"} />;
-  //   }
+  if (userLogin) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <Container component="main" maxWidth="sm">
-      {/* <SweetAlertSuccess
-        show={modalOpen}
-        navigateDestination={navigateDestination()}
-      /> */}
-      {/* <SweetAlert2 {...swalProps} didClose={navigateDestination} /> */}
+      <SweetAlert
+        show={openError}
+        icon="error"
+        title="Có lỗi xảy ra!!!"
+        text={errorLogin || undefined}
+        onConfirm={() => setOpenError(false)}
+      />
+
+      <SweetAlert
+        show={openSuccess}
+        icon="success"
+        title="Đăng nhập thành công!!!"
+        timer={2000}
+        onConfirm={() => {
+          setOpenSuccess(false);
+          navigate(-1);
+        }}
+        didClose={() => {
+          setOpenSuccess(false);
+          navigate(-1);
+        }}
+      />
 
       <Stack alignItems="center">
         <Avatar
@@ -144,11 +126,11 @@ const LoginPage = (props: Props) => {
             {...register("taiKhoan")}
           />
           {errors.taiKhoan ? (
-            <FormHelperText id="taiKhoan-text" error>
+            <FormHelperText id="taiKhoan-text" filled error>
               {errors.taiKhoan.message}
             </FormHelperText>
           ) : (
-            <FormHelperText id="taiKhoan-text"></FormHelperText>
+            <FormHelperText />
           )}
           <TextField
             variant="outlined"
@@ -156,7 +138,7 @@ const LoginPage = (props: Props) => {
             required
             fullWidth
             label="Mật khẩu"
-            type={showPassword ? "text" : "matKhau"}
+            type={showPassword ? "text" : "password"}
             id="matKhau"
             autoComplete="current-password"
             color={errors.matKhau && "warning"}
@@ -176,26 +158,21 @@ const LoginPage = (props: Props) => {
             {...register("matKhau")}
           />
           {errors.matKhau ? (
-            <FormHelperText id="matKhau-text" error>
+            <FormHelperText id="matKhau-text" filled error>
               {errors.matKhau.message}
             </FormHelperText>
           ) : (
-            <FormHelperText id="matKhau-text"></FormHelperText>
+            <FormHelperText />
           )}
           <FormControlLabel
             control={<Checkbox value="remember" color="error" />}
             label="Nhớ tài khoản"
           />
-          {/* {errorLogin && (
-            <Alert severity="error" sx={{ fontWeight: "600" }}>
-              {errorLogin}
-            </Alert>
-          )} */}
           <Button
             fullWidth
             variant="contained"
             sx={{
-              margin: "1rem 0",
+              py: 1,
               backgroundColor: "error.main",
               "&:hover": {
                 backgroundColor: "error.dark",
@@ -203,31 +180,29 @@ const LoginPage = (props: Props) => {
             }}
             type="submit"
           >
-            {/* {isLoading ? <CircularProgress color="inherit" /> : "ĐĂNG NHẬP"} */}
+            {isLoginLoading ? (
+              <CircularProgress color="inherit" size="25px" />
+            ) : (
+              "ĐĂNG NHẬP"
+            )}
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Quên mật khẩu?
-              </Link>
-            </Grid>
-            <Grid item>
-              <NavLink
-                to={"/register"}
-                style={{
-                  textDecoration: "underline",
-                  fontWeight: "600",
-                  fontSize: "0.875rem",
-                  color: "#212121",
-                  textDecorationColor: "rgba(33, 33, 33, 0.4)",
-                }}
-              >
-                Bạn chưa có tài khoản? Đăng kí
-              </NavLink>
-            </Grid>
-          </Grid>
+
+          <Stack mt={2} alignItems="flex-end">
+            <Link href="#" variant="body2">
+              Quên mật khẩu?
+            </Link>
+            <NavLink
+              to={"/register"}
+              style={{
+                fontWeight: "500",
+                fontSize: "0.875rem",
+                marginTop: "5px",
+              }}
+            >
+              Bạn chưa có tài khoản? Đăng kí
+            </NavLink>
+          </Stack>
         </form>
-        <Box mt={8}>{/* <Copyright /> */}</Box>
       </Stack>
     </Container>
   );
