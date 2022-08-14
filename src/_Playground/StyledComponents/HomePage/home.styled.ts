@@ -10,7 +10,7 @@ export const TitleText = styled(Typography)`
   overflow: hidden;
   color: ${theme.palette.secondary.contrastText};
   font-weight: 700;
-  height: 3.6rem;
+  height: 3.8rem;
   line-height: 1.8rem;
 `;
 

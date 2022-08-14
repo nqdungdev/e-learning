@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "configStore";
@@ -41,7 +41,7 @@ const LoginPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const { userLogin, isLoginLoading, errorLogin } = useSelector(
+  const { isLoginLoading, errorLogin } = useSelector(
     (state: RootState) => state.authSlice
   );
 
@@ -76,10 +76,6 @@ const LoginPage = () => {
   const onError = (error: FieldErrors<LoginValues>) => {
     console.log(error);
   };
-
-  if (userLogin) {
-    return <Navigate to={"/"} />;
-  }
 
   return (
     <Container component="main" maxWidth="sm">

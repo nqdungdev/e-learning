@@ -6,6 +6,7 @@ import ErrorBoundary from "Components/ErrorBoundary/ErrorBoundary";
 import LoadingLazy from "Components/LoadingLazy/LoadingLazy";
 import HomeTemplate from "Templates/HomeTemplate/HomeTemplate";
 import LoginTemplate from "Templates/LoginTemplate/LoginTemplate";
+import ProtectedLogin from "Routes/ProtectedLogin";
 
 const HomePage = lazy(() => import("Pages/HomePage/HomePage"));
 const LoginPage = lazy(() => import("Pages/LoginPage/LoginPage"));
@@ -22,7 +23,14 @@ function App() {
                 <Route index element={<HomePage />} />
               </Route>
               <Route path="/" element={<LoginTemplate />}>
-                <Route path="login" element={<LoginPage />} />
+                <Route
+                  path="login"
+                  element={
+                    <ProtectedLogin>
+                      <LoginPage />
+                    </ProtectedLogin>
+                  }
+                />
                 <Route path="register" element={<RegisterPage />} />
               </Route>
               <Route path="*" element={<Navigate to={"/"} />} />

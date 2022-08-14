@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import {
   Container,
@@ -8,22 +8,18 @@ import {
   IconButton,
   Typography,
   Avatar,
-  MenuItem,
   Stack,
+  InputBase,
+  Paper,
 } from "@mui/material";
-// import { scroller } from "react-scroll";
-
-import MenuIcon from "@mui/icons-material/Menu";
-// import { HeaderAside } from "_Playground/StyledComponents/home.styled";
 import { NavLink, useNavigate } from "react-router-dom";
-// import { Link as LinkScroll } from "react-scroll";
-
 import Logo from "Components/Logo/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "configStore";
-// import { logoutUser } from "Slices/auth";
 import { logoutUser } from "Slices/authSlice";
+import SearchIcon from "@mui/icons-material/Search";
 import SweetAlert from "react-sweetalert2";
+import { FieldErrors, useForm } from "react-hook-form";
 
 const pages = [
   { name: "Lịch chiếu", id: "schedule" },
@@ -37,21 +33,22 @@ type Props = {};
 const Header = (props: Props) => {
   const dispatch = useDispatch<any>();
   const { userLogin } = useSelector((state: RootState) => state.authSlice);
-  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
+
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      searchText: "",
+    },
+    mode: "onSubmit",
+  });
+
+  const onSuccess = (values: any) => {};
+  const onError = (errors: FieldErrors<{ searchText: string }>) => {
+    console.log(errors);
   };
 
   const navigate = useNavigate();
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -92,108 +89,39 @@ const Header = (props: Props) => {
       />
 
       <Container sx={{ height: "100%" }}>
-        <Toolbar disableGutters sx={{ height: "100%" }}>
-          <Box
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-            }}
-          >
+        <Toolbar
+          disableGutters
+          sx={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box>
             <Logo />
           </Box>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            {/* <HeaderAside
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+          <Stack direction="row">
+            <Paper
+              component="form"
               sx={{
-                display: { xs: "block", md: "none" },
+                display: "flex",
+                alignItems: "center",
+                width: 400,
+                mr: 3,
               }}
+              onSubmit={handleSubmit(onSuccess, onError)}
             >
-              <MenuItem>
-                <NavLink to={"/"}>
-                  <Box
-                    sx={{
-                      mr: 2,
-                      display: { xs: "flex", md: "none" },
-                    }}
-                  >
-                    <Logo />
-                  </Box>
-                </NavLink>
-              </MenuItem>
-              {pages.map((page, index) => (
-                <MenuItem
-                  key={index}
-                  onClick={() => {
-                    scroller.scrollTo(page.id, {
-                      duration: 0,
-                      smooth: true,
-                      offset: -70,
-                    });
-                    handleCloseNavMenu();
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      m: 1,
-                      // color: "primary.contrastText",
-                      cursor: "pointer",
-                      width: "100%",
-                    }}
-                  >
-                    {page.name}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </HeaderAside> */}
-          </Box>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Tìm kiếm"
+                {...register("searchText")}
+              />
+              <IconButton sx={{ p: "10px" }} type="submit">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page, index) => (
-              <Typography
-                sx={{
-                  m: 2,
-                  color: "primary.contrastText",
-                  "&:hover": {
-                    color: "secondary.main",
-                  },
-                  cursor: "pointer",
-                }}
-                key={index}
-              >
-                {/* <LinkScroll
-                  to={page.id}
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={100}
-                >
-                  {page.name}
-                </LinkScroll> */}
-              </Typography>
-            ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
             {userLogin ? (
               <Stack direction="row">
                 <NavLink to={"/user"}>
@@ -265,24 +193,9 @@ const Header = (props: Props) => {
                 </NavLink>
               </Stack>
             )}
-          </Box>
+          </Stack>
         </Toolbar>
       </Container>
-      {/* <SweetAlertConfirm
-        show={open}
-        icon="question"
-        title="Bạn muốn đăng xuất?"
-        text="Bạn có muốn đăng nhập không?"
-        callbackConfirm={() => {
-          handleLogout();
-        }}
-        callbackClose={handleClose}
-      />
-      <SweetAlertSuccess
-        show={openSuccess}
-        title="Đăng xuất thành công!"
-        navigateDestination={"/"}
-      /> */}
     </AppBar>
   );
 };
