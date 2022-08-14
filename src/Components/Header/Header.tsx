@@ -21,16 +21,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import SweetAlert from "react-sweetalert2";
 import { FieldErrors, useForm } from "react-hook-form";
 
-const pages = [
-  { name: "Lịch chiếu", id: "schedule" },
-  { name: "Cụm rạp", id: "theater" },
-  { name: "Tin tức", id: "news" },
-  { name: "Ứng dụng", id: "app" },
-];
-
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   const dispatch = useDispatch<any>();
   const { userLogin } = useSelector((state: RootState) => state.authSlice);
   const [openConfirm, setOpenConfirm] = useState(false);
