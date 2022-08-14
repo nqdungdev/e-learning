@@ -5,6 +5,7 @@ import {
   TextFooter,
   TitleFooter,
 } from "_Playground/StyledComponents/HomePage/home.styled";
+import Logo from "Components/Logo/Logo";
 
 const Footer = () => {
   return (
@@ -75,7 +76,9 @@ const Footer = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Box>Logo</Box>
+          <Box>
+            <Logo />
+          </Box>
           <TextFooter>© 2022 E-learning, Inc</TextFooter>
         </Stack>
       </Container>

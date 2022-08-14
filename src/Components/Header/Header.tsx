@@ -21,9 +21,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "Components/Logo/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "configStore";
-import SweetAlertConfirm from "Components/SweetAlert/SweetAlertConfirm";
 // import { logoutUser } from "Slices/auth";
-import SweetAlertSuccess from "Components/SweetAlert/SweetAlertSuccess";
 import { logoutUser } from "Slices/authSlice";
 import SweetAlert from "react-sweetalert2";
 

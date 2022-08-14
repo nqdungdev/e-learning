@@ -11,7 +11,7 @@ const LoginTemplate = () => {
       justifyContent="center"
       sx={{
         background: `url(${background_login}) 100% 100% / cover no-repeat`,
-        height: "100vh",
+        minHeight: "100vh",
       }}
     >
       <Box
@@ -19,7 +19,7 @@ const LoginTemplate = () => {
       >
         <Logo />
       </Box>
-      <Box sx={{ position: "relative", zIndex: "100" }}>
+      <Box sx={{ position: "relative", zIndex: "10" }}>
         <Paper sx={{ pt: 3, pb: 5, px: 2 }}>
           <Outlet />
         </Paper>

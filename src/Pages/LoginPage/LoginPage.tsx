@@ -45,6 +45,10 @@ const LoginPage = () => {
     (state: RootState) => state.authSlice
   );
 
+  useEffect(() => {
+    document.title = "Đăng nhập";
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -73,13 +77,10 @@ const LoginPage = () => {
     console.log(error);
   };
 
-  useEffect(() => {
-    document.title = "Đăng nhập";
-  }, []);
-
   if (userLogin) {
     return <Navigate to={"/"} />;
   }
+
   return (
     <Container component="main" maxWidth="sm">
       <SweetAlert
@@ -112,6 +113,7 @@ const LoginPage = () => {
         <Typography component="h1" variant="h5" fontWeight="bold">
           Đăng nhập
         </Typography>
+
         <form onSubmit={handleSubmit(onSuccess, onError)}>
           <TextField
             variant="outlined"

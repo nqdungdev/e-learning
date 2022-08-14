@@ -3,6 +3,15 @@ export interface LoginValues {
   matKhau: string;
 }
 
+export interface RegisterValues {
+  taiKhoan: string;
+  matKhau: string;
+  hoTen: string;
+  soDT: string;
+  email: string;
+  maNhom?: string;
+  passwordConfirm?: string;
+}
 export interface User {
   taiKhoan: string;
   hoTen: string;

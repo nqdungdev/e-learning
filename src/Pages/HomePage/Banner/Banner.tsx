@@ -20,29 +20,11 @@ const Banner = (props: Props) => {
     slidesToScroll: 1,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
-    //  dotsClass: "slick-dots ",
-    //  appendDots: (dots: any) => (
-    //    <div
-    //      style={{
-    //        bottom: "5%",
-    //      }}
-    //    >
-    //      <ul style={{ padding: 0 }}>{dots}</ul>
-    //    </div>
-    //  ),
-    //  customPaging: () => <CustomDots />,
     responsive: [
       {
         breakpoint: 768,
         settings: {
           arrows: false,
-        },
-      },
-      {
-        breakpoint: 576,
-        settings: {
-          arrows: false,
-          dots: false,
         },
       },
     ],
@@ -53,7 +35,7 @@ const Banner = (props: Props) => {
         <Box
           sx={{
             backgroundImage: `url(${banner_1})`,
-            backgroundPosition: " 100% 100%",
+            backgroundPosition: "100% 100%",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             paddingTop: "30%",
@@ -62,7 +44,7 @@ const Banner = (props: Props) => {
         <Box
           sx={{
             backgroundImage: `url(${banner_2})`,
-            backgroundPosition: " 100% 100%",
+            backgroundPosition: "100% 100%",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             paddingTop: "30%",
