@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import store from "configStore";
-// import store from "configStore";
+
 const axiosClient = axios.create({
   baseURL: "http://elearningnew.cybersoft.edu.vn/api",
   headers: {
@@ -11,7 +11,8 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config) => {
   if (config.headers) {
-    const { accessToken = "" } = (store.getState() as any) || {};
+    const { accessToken = "" } =
+      (store.getState().authSlice.userLogin as any) || {};
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

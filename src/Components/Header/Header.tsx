@@ -47,7 +47,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="fixed" sx={{ height: "5rem" }} color="primary">
+    <AppBar position="fixed" sx={{ height: "5rem", bgcolor: "primary.dark" }}>
       <SweetAlert
         show={openConfirm}
         icon="question"
@@ -129,7 +129,7 @@ const Header = () => {
                         m: 2,
                         color: "primary.contrastText",
                         "&:hover": {
-                          color: "secondary.main",
+                          color: "secondary.light",
                         },
                       }}
                     >
@@ -143,8 +143,9 @@ const Header = () => {
                     m: 2,
                     color: "primary.contrastText",
                     cursor: "pointer",
+                    transition: "all 0.4s",
                     "&:hover": {
-                      color: "secondary.main",
+                      color: "secondary.light",
                     },
                   }}
                   onClick={() => {
@@ -161,8 +162,9 @@ const Header = () => {
                     sx={{
                       m: 2,
                       color: "primary.contrastText",
+                      transition: "all 0.4s",
                       "&:hover": {
-                        color: "secondary.main",
+                        color: "secondary.light",
                       },
                     }}
                   >
@@ -174,6 +176,7 @@ const Header = () => {
                     sx={{
                       m: 2,
                       color: "primary.contrastText",
+                      transition: "all 0.4s",
                       "&:hover": {
                         color: "secondary.main",
                       },

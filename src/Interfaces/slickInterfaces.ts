@@ -4,7 +4,7 @@ export interface Settings {
   infinite: boolean;
   speed: number;
   slidesToShow: any;
-  slidesToScroll: number;
+  slidesToScroll?: number;
   autoplay?: boolean;
   rows?: number;
   nextArrow?: JSX.Element;

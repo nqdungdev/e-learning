@@ -1,6 +1,6 @@
 import { Tabs, Tab, Box } from "@mui/material";
+import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "configStore";
-import { useEffect, useState, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourseByCategory, getCourseCatalog } from "Slices/courseSlice";
 
@@ -50,4 +50,4 @@ const TabLabel = () => {
   );
 };
 
-export default memo(TabLabel);
+export default TabLabel;

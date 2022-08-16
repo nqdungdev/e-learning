@@ -6,7 +6,7 @@ export interface Course {
   maKhoaHoc: string;
   tenKhoaHoc: string;
   biDanh: string;
-  danhMucKhoaHoc: CourseCatalog;
+  danhMucKhoaHoc: { maDanhMucKhoahoc: string; tenDanhMucKhoaHoc: string };
   hinhAnh: string;
   luotXem: number;
   maNhom: string;
@@ -19,4 +19,9 @@ export interface Course {
     maLoaiNguoiDung: string;
     tenLoaiNguoiDung: string;
   };
+}
+
+export interface RegisterCourse {
+  maKhoaHoc: string;
+  taiKhoan: string;
 }

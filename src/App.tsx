@@ -9,6 +9,7 @@ import LoginTemplate from "Templates/LoginTemplate/LoginTemplate";
 import ProtectedLogin from "Routes/ProtectedLogin";
 
 const HomePage = lazy(() => import("Pages/HomePage/HomePage"));
+const DetailPage = lazy(() => import("Pages/DetailPage/DetailPage"));
 const LoginPage = lazy(() => import("Pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("Pages/RegisterPage/RegisterPage"));
 
@@ -21,6 +22,7 @@ function App() {
             <Routes>
               <Route path="" element={<HomeTemplate />}>
                 <Route index element={<HomePage />} />
+                <Route path="detail/:courseId" element={<DetailPage />} />
               </Route>
               <Route path="/" element={<LoginTemplate />}>
                 <Route

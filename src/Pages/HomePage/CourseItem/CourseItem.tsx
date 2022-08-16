@@ -8,6 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { Course } from "Interfaces/courseInterface";
+import { useNavigate } from "react-router-dom";
 import {
   TitleText,
   DescText,
@@ -18,6 +19,7 @@ type Props = {
 };
 
 const CourseItem = ({ course }: Props) => {
+  const navigate = useNavigate();
   return (
     <Box sx={{ px: 1 }}>
       <Card sx={{ maxWidth: 250 }}>
@@ -38,7 +40,11 @@ const CourseItem = ({ course }: Props) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => navigate(`/detail/${course.maKhoaHoc}`)}
+          >
             Chi tiết
           </Button>
         </CardActions>

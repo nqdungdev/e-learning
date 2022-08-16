@@ -10,7 +10,11 @@ import Logo from "Components/Logo/Logo";
 const Footer = () => {
   return (
     <Box
-      sx={{ backgroundColor: "#212121", color: "primary.contrastText", py: 5 }}
+      sx={{
+        backgroundColor: "primary.dark",
+        color: "primary.contrastText",
+        py: 5,
+      }}
     >
       <Container maxWidth="lg">
         <Grid container spacing={2}>

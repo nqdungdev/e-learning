@@ -1,21 +1,28 @@
-import { useSelector } from "react-redux";
-import { RootState } from "configStore";
+import { useEffect } from "react";
+import { AppDispatch, RootState } from "configStore";
+import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { Settings } from "Interfaces/slickInterfaces";
+import { getCourseByCategory } from "Slices/courseSlice";
+import { DetailTitle } from "_Playground/StyledComponents/DetailPage/detail.styled";
 import { Box, Container } from "@mui/material";
-import TabPanel from "./TabPanel";
-import TabLabel from "./TabLabel";
-import CourseItem from "../CourseItem/CourseItem";
+import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
 
-type Props = {};
+const DetailRelated = () => {
+  const { course, courseList } = useSelector(
+    (state: RootState) => state.courseSlice
+  );
 
-const CourseList = (props: Props) => {
-  const { courseList } = useSelector((state: RootState) => state.courseSlice);
+  const dispatch = useDispatch<AppDispatch>();
 
-  console.log(courseList);
+  useEffect(() => {
+    if (course)
+      dispatch(getCourseByCategory(course?.danhMucKhoaHoc.maDanhMucKhoahoc));
+    return () => {};
+  }, [dispatch, course]);
 
   const settings: Settings = {
-    dots: true,
+    dots: false,
     arrows: false,
     infinite: true,
     speed: 1000,
@@ -28,7 +35,6 @@ const CourseList = (props: Props) => {
       {
         breakpoint: 992,
         settings: {
-          arrows: false,
           // slidesToShow: courseList.length >= 3 ? 3 : courseList.length,
           slidesToShow: 3,
         },
@@ -51,21 +57,18 @@ const CourseList = (props: Props) => {
       },
     ],
   };
-
   return (
     <Box id="schedule" sx={{ py: 5, bgcolor: "paper.main" }}>
       <Container>
-        <TabLabel />
-        <TabPanel>
-          <Slider {...settings}>
-            {courseList?.map((course) => {
-              return <CourseItem key={course.maKhoaHoc} course={course} />;
-            })}
-          </Slider>
-        </TabPanel>
+        <DetailTitle>Khóa học liên quan</DetailTitle>
+        <Slider {...settings}>
+          {courseList?.map((course) => {
+            return <CourseItem key={course.maKhoaHoc} course={course} />;
+          })}
+        </Slider>
       </Container>
     </Box>
   );
 };
 
-export default CourseList;
+export default DetailRelated;
