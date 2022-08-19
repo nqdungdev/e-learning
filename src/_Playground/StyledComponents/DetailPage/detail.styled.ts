@@ -12,15 +12,13 @@ export const BreadcrumbText = styled(Typography)`
 `;
 //Cover
 export const DetailTitle = styled.p<{ color?: string }>`
-  color: ${({ color }) =>
-    color ? color : theme.palette.secondary.contrastText};
+  color: ${({ color }) => (color ? color : theme.palette.paper.contrastText)};
   font-size: 3rem;
   margin: 1rem 0;
 `;
 
 export const DetailText = styled.p<{ color?: string }>`
-  color: ${({ color }) =>
-    color ? color : theme.palette.secondary.contrastText};
+  color: ${({ color }) => (color ? color : theme.palette.paper.contrastText)};
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.6rem;

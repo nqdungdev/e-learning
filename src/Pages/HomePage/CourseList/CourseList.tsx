@@ -2,17 +2,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "configStore";
 import Slider from "react-slick";
 import { Settings } from "Interfaces/slickInterfaces";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import TabPanel from "./TabPanel";
 import TabLabel from "./TabLabel";
 import CourseItem from "../CourseItem/CourseItem";
+import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
 
 type Props = {};
 
 const CourseList = (props: Props) => {
   const { courseList } = useSelector((state: RootState) => state.courseSlice);
-
-  console.log(courseList);
 
   const settings: Settings = {
     dots: true,
@@ -20,8 +19,8 @@ const CourseList = (props: Props) => {
     infinite: true,
     speed: 1000,
     autoplay: true,
-    // slidesToShow: courseList.length >= 4 ? 4 : courseList.length,
-    slidesToShow: 4,
+    slidesToShow:
+      courseList.length > 0 && courseList.length <= 4 ? courseList.length : 4,
     slidesToScroll: 2,
     rows: 1,
     responsive: [
@@ -29,24 +28,30 @@ const CourseList = (props: Props) => {
         breakpoint: 992,
         settings: {
           arrows: false,
-          // slidesToShow: courseList.length >= 3 ? 3 : courseList.length,
-          slidesToShow: 3,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 3,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          // slidesToShow: courseList.length >= 2 ? 2 : courseList.length,
-          slidesToShow: 2,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 2,
         },
       },
       {
         breakpoint: 576,
         settings: {
-          // slidesToShow: courseList.length >= 1 ? 1 : courseList.length,
-          slidesToShow: 1,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 1,
           slidesToScroll: 1,
-          rows: 3,
+          rows: 2,
         },
       },
     ],
@@ -55,6 +60,12 @@ const CourseList = (props: Props) => {
   return (
     <Box id="schedule" sx={{ py: 5, bgcolor: "paper.main" }}>
       <Container>
+        <Title>Nhiều sự chọn lựa</Title>
+
+        <Typography variant="h5" mb={2}>
+          Với hàng nghìn khóa học trực tuyến được cập nhật và phát hành hàng
+          tháng.
+        </Typography>
         <TabLabel />
         <TabPanel>
           <Slider {...settings}>

@@ -27,30 +27,36 @@ const DetailRelated = () => {
     infinite: true,
     speed: 1000,
     autoplay: true,
-    // slidesToShow: courseList.length >= 4 ? 4 : courseList.length,
-    slidesToShow: 4,
+    slidesToShow:
+      courseList.length > 0 && courseList.length <= 4 ? courseList.length : 4,
     slidesToScroll: 2,
     rows: 1,
     responsive: [
       {
         breakpoint: 992,
         settings: {
-          // slidesToShow: courseList.length >= 3 ? 3 : courseList.length,
-          slidesToShow: 3,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 3,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          // slidesToShow: courseList.length >= 2 ? 2 : courseList.length,
-          slidesToShow: 2,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 2,
         },
       },
       {
         breakpoint: 576,
         settings: {
-          // slidesToShow: courseList.length >= 1 ? 1 : courseList.length,
-          slidesToShow: 1,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 1,
           slidesToScroll: 1,
           rows: 3,
         },

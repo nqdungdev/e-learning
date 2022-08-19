@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -6,12 +7,14 @@ import {
   CardActionArea,
   CardActions,
   Button,
+  Rating,
+  Stack,
+  Typography,
 } from "@mui/material";
 import { Course } from "Interfaces/courseInterface";
-import { useNavigate } from "react-router-dom";
 import {
-  TitleText,
-  DescText,
+  CardTitle,
+  CardText,
 } from "_Playground/StyledComponents/HomePage/home.styled";
 
 type Props = {
@@ -20,8 +23,15 @@ type Props = {
 
 const CourseItem = ({ course }: Props) => {
   const navigate = useNavigate();
+
+  const randomStar = (): number => {
+    return Math.floor(Math.random() * 11) / 2;
+  };
+
+  const star: number = randomStar();
+
   return (
-    <Box sx={{ px: 1 }}>
+    <Box sx={{ px: 1, mb: 2 }}>
       <Card sx={{ maxWidth: 250 }}>
         <CardActionArea>
           <CardMedia
@@ -31,18 +41,31 @@ const CourseItem = ({ course }: Props) => {
             alt={course.hinhAnh}
           />
           <CardContent>
-            <TitleText gutterBottom variant="h5" title={course.tenKhoaHoc}>
-              {course.tenKhoaHoc}
-            </TitleText>
-            <DescText variant="body2" color="text.secondary">
-              {course.moTa}
-            </DescText>
+            <CardTitle title={course.tenKhoaHoc}>{course.tenKhoaHoc}</CardTitle>
+            <CardText>{course.nguoiTao.hoTen}</CardText>
+            <Stack direction="row" alignItems="center">
+              <Typography color="secondary.main" sx={{ fontWeight: 700 }}>
+                {star}
+              </Typography>
+              <Rating
+                name="half-rating-read"
+                value={star}
+                precision={0.5}
+                size="small"
+                readOnly
+              />
+              <CardText title="Số lượng học viên" style={{ marginLeft: "5px" }}>
+                ({course.soLuongHocVien})
+              </CardText>
+            </Stack>
           </CardContent>
         </CardActionArea>
         <CardActions>
           <Button
+            variant="contained"
             size="small"
-            color="primary"
+            color="secondary"
+            sx={{ color: "secondary.contrastText" }}
             onClick={() => navigate(`/detail/${course.maKhoaHoc}`)}
           >
             Chi tiết

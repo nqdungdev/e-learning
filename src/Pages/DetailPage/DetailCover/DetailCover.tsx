@@ -196,7 +196,7 @@ const DetailCover = () => {
                 color="secondary"
                 sx={{
                   width: "max-content",
-                  color: "primary.contrastText",
+                  color: "secondary.contrastText",
                 }}
                 onClick={() => {
                   handleConfirm(course!.maKhoaHoc);

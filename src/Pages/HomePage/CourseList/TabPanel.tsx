@@ -9,9 +9,9 @@ const TabPanel = (props: Props) => {
   const { children, ...other } = props;
 
   return (
-    <div role="tabpanel" {...other}>
+    <Box role="tabpanel" {...other} sx={{ mx: "-1.5rem" }}>
       {<Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
+    </Box>
   );
 };
 
