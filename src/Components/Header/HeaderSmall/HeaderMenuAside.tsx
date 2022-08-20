@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
-import LabelImportantIcon from "@mui/icons-material/LabelImportant";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
@@ -20,22 +19,20 @@ import {
   MenuAside,
   MenuItemText,
 } from "_Playground/StyledComponents/HomePage/home.styled";
+import HeaderMenuCatalog from "./HeaderMenuCatalog";
 
 type Props = {
   showMenuAside: boolean;
-  onSetOpenConfirm?: () => void;
+  onOpenConfirm?: () => void;
 };
 
 function important<T>(value: T): T {
   return (value + " !important") as any;
 }
 
-const HeaderMenuAside = ({ showMenuAside, onSetOpenConfirm }: Props) => {
+const HeaderMenuAside = ({ showMenuAside, onOpenConfirm }: Props) => {
   const [showCategory, setShowCategory] = useState(true);
   const { userLogin } = useSelector((state: RootState) => state.authSlice);
-  const { courseCatalog } = useSelector(
-    (state: RootState) => state.courseSlice
-  );
 
   return (
     <MenuAside
@@ -123,34 +120,14 @@ const HeaderMenuAside = ({ showMenuAside, onSetOpenConfirm }: Props) => {
         <CategoryIcon />
         <Typography ml={2}>Danh mục</Typography>
       </MenuItemText>
-      <Box
-        sx={{
-          overflow: "hidden",
-          height: showCategory ? "15rem" : 0,
-          transition: "all 0.4s",
-        }}
-      >
-        {courseCatalog.map((category) => {
-          return (
-            <MenuItemText
-              key={category.maDanhMuc}
-              value={category.maDanhMuc}
-              sx={{
-                py: 1,
-              }}
-            >
-              <LabelImportantIcon sx={{ ml: 2 }} />
-              <Typography ml={2}> {category.tenDanhMuc}</Typography>
-            </MenuItemText>
-          );
-        })}
-      </Box>
+      <HeaderMenuCatalog showCategory={showCategory} />
+
       {userLogin && (
         <MenuItemText
           sx={{
             py: 2,
           }}
-          onClick={onSetOpenConfirm}
+          onClick={onOpenConfirm}
         >
           <LogoutIcon />
           <Typography ml={2}>Đăng xuất</Typography>

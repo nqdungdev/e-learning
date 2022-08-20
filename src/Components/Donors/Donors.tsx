@@ -13,8 +13,8 @@ const Donors = () => {
       <Container sx={{ py: 5 }}>
         <Stack direction="row" justifyContent="center" flexWrap="wrap">
           {donors.map((donor, index) => (
-            <Box sx={{ mx: 2 }}>
-              <img key={index} src={donor} alt={donor} />
+            <Box key={index} sx={{ mx: 2 }}>
+              <img src={donor} alt={donor} />
             </Box>
           ))}
         </Stack>
