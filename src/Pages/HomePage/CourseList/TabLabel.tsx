@@ -35,7 +35,7 @@ const TabLabel = () => {
         indicatorColor="secondary"
         scrollButtons
         allowScrollButtonsMobile
-        sx={{ width: "100%" }}
+        sx={{ width: { xs: "100%", lg: "auto" } }}
       >
         {courseCatalog?.map((course) => (
           <Tab

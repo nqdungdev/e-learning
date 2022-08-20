@@ -7,9 +7,7 @@ import banner_2 from "Assets/img/Banner/banner_2.jpg";
 import CustomPrevArrow from "Components/CustomSlick/CustomPrevArrow";
 import CustomNextArrow from "Components/CustomSlick/CustomNextArrow";
 
-type Props = {};
-
-const Banner = (props: Props) => {
+const Banner = () => {
   const settings: Settings = {
     dots: false,
     arrows: true,
@@ -29,6 +27,7 @@ const Banner = (props: Props) => {
       },
     ],
   };
+
   return (
     <Box sx={{ mt: "5rem" }}>
       <Slider {...settings}>

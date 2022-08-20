@@ -6,38 +6,39 @@ import background_login from "Assets/img/Background/background_login.jpg";
 
 const LoginTemplate = () => {
   return (
-    <Container
+    <Box
       sx={{
         background: `url(${background_login}) 100% 100% / cover no-repeat`,
-        minHeight: "100vh",
       }}
     >
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        sx={{
-          minHeight: "100vh",
-        }}
-      >
-        <Box
+      <Container>
+        <Stack
+          alignItems="center"
+          justifyContent="center"
           sx={{
-            position: "absolute",
-            zIndex: "100",
-            left: "10px",
-            top: "10px",
+            minHeight: "100vh",
           }}
         >
-          <Logo />
-        </Box>
-        <Box sx={{ position: "relative", zIndex: "10" }}>
-          <Paper sx={{ pt: 3, pb: 5, px: 2 }}>
-            <Outlet />
-          </Paper>
-        </Box>
+          <Box
+            sx={{
+              position: "absolute",
+              zIndex: "100",
+              left: "10px",
+              top: "10px",
+            }}
+          >
+            <Logo />
+          </Box>
+          <Box sx={{ position: "relative", zIndex: "10" }}>
+            <Paper sx={{ pt: 3, pb: 5, px: 2 }}>
+              <Outlet />
+            </Paper>
+          </Box>
 
-        <OverlayBackground />
-      </Stack>
-    </Container>
+          <OverlayBackground />
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 

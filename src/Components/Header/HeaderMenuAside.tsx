@@ -31,12 +31,12 @@ function important<T>(value: T): T {
 }
 
 const HeaderMenuAside = ({ showMenuAside, onSetOpenConfirm }: Props) => {
-  console.log(showMenuAside);
   const [showCategory, setShowCategory] = useState(true);
   const { userLogin } = useSelector((state: RootState) => state.authSlice);
   const { courseCatalog } = useSelector(
     (state: RootState) => state.courseSlice
   );
+
   return (
     <MenuAside
       sx={{

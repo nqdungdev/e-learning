@@ -65,6 +65,7 @@ const Features = () => {
       icon: <BiotechIcon />,
     },
   ];
+
   return (
     <Box sx={{ py: 5, bgcolor: "paper.main", textAlign: "center" }}>
       <Container>

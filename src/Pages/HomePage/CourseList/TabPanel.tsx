@@ -9,7 +9,7 @@ const TabPanel = (props: Props) => {
   const { children, ...other } = props;
 
   return (
-    <Box role="tabpanel" {...other} sx={{ mx: "-1.5rem" }}>
+    <Box role="tabpanel" {...other} sx={{ mx: { xs: "auto", md: "-1.5rem" } }}>
       {<Box sx={{ p: 3 }}>{children}</Box>}
     </Box>
   );

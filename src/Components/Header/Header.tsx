@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "configStore";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -13,10 +13,6 @@ import {
   Avatar,
   Stack,
   Paper,
-  InputLabel,
-  FormControl,
-  SelectChangeEvent,
-  Select,
   Button,
   TextField,
   InputAdornment,
@@ -26,16 +22,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import SweetAlert from "react-sweetalert2";
 import Logo from "Components/Logo/Logo";
-import {
-  MenuItemText,
-  OverlayHeader,
-} from "_Playground/StyledComponents/HomePage/home.styled";
+import { OverlayHeader } from "_Playground/StyledComponents/HomePage/home.styled";
 import HeaderMenuAside from "./HeaderMenuAside";
+import HeaderCategory from "./HeaderCategory";
 
 const Header = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
-  const [category, setCategory] = useState("");
   const [showSearchField, setShowSearchField] = useState(false);
   const [showMenuAside, setShowMenuAside] = useState(false);
 
@@ -43,13 +36,7 @@ const Header = () => {
 
   const { userLogin } = useSelector((state: RootState) => state.authSlice);
 
-  const { courseCatalog } = useSelector(
-    (state: RootState) => state.courseSlice
-  );
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
-  };
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -59,19 +46,25 @@ const Header = () => {
   });
 
   const onSuccess = (values: any) => {};
+
   const onError = (errors: FieldErrors<{ searchText: string }>) => {
     console.log(errors);
   };
-
-  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logoutUser());
     setOpenSuccess(true);
   };
 
+  const handleCloseOpenConfirm = useCallback(() => {
+    setOpenConfirm(false);
+  }, []);
+
   return (
-    <AppBar position="fixed" sx={{ height: "5rem", bgcolor: "paper.main" }}>
+    <AppBar
+      position="fixed"
+      sx={{ height: "5rem", width: "100%", bgcolor: "paper.main" }}
+    >
       <SweetAlert
         show={openConfirm}
         icon="question"
@@ -103,7 +96,7 @@ const Header = () => {
         }}
       />
 
-      <Container sx={{ height: "100%" }}>
+      <Container sx={{ height: "100%", width: "100%" }}>
         <Toolbar
           disableGutters
           sx={{
@@ -121,36 +114,7 @@ const Header = () => {
             }}
           >
             <Logo />
-            <FormControl
-              sx={{ mx: 3, width: "180px" }}
-              size="small"
-              color="secondary"
-            >
-              <InputLabel id="category-select">Danh mục</InputLabel>
-              <Select
-                labelId="category-select"
-                id="category-select"
-                value={category}
-                label="Category"
-                onChange={handleChange}
-                sx={{
-                  bgcolor: "paper.main",
-                  borderColor: "secondary.main",
-                  color: "paper.contrastText",
-                }}
-              >
-                {courseCatalog.map((category) => {
-                  return (
-                    <MenuItemText
-                      key={category.maDanhMuc}
-                      value={category.maDanhMuc}
-                    >
-                      {category.tenDanhMuc}
-                    </MenuItemText>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <HeaderCategory />
           </Stack>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -364,9 +328,7 @@ const Header = () => {
 
       <HeaderMenuAside
         showMenuAside={showMenuAside}
-        onSetOpenConfirm={() => {
-          setOpenConfirm(true);
-        }}
+        onSetOpenConfirm={handleCloseOpenConfirm}
       />
 
       <OverlayHeader
