@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const Title = styled.h1<{ color?: string }>`
   color: ${({ color }) => (color ? color : theme.palette.paper.contrastText)};
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
 `;
 

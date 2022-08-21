@@ -23,14 +23,14 @@ export const CustomArrow = styled(Box)`
   }
 `;
 export const CustomSlickPrevArrow = styled(CustomArrow)(`
-  left: 2%;
+  left: 1%;
   &:hover > * {
     transform: translateX(10%); 
   }
 `);
 
 export const CustomSlickNextArrow = styled(CustomArrow)`
-  right: 2%;
+  right: 1%;
   &:hover > * {
     transform: translateX(-10%);
   }

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { Settings } from "Interfaces/slickInterfaces";
 import { getCourseByCategory } from "Slices/courseSlice";
-import { DetailTitle } from "_Playground/StyledComponents/DetailPage/detail.styled";
 import { Box, Container } from "@mui/material";
 import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
+import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
 
 const DetailRelated = () => {
   const { course, courseList } = useSelector(
@@ -66,7 +66,7 @@ const DetailRelated = () => {
   return (
     <Box id="schedule" sx={{ py: 5, bgcolor: "paper.main" }}>
       <Container>
-        <DetailTitle>Khóa học liên quan</DetailTitle>
+        <Title>Khóa học liên quan</Title>
         <Slider {...settings}>
           {courseList?.map((course) => {
             return <CourseItem key={course.maKhoaHoc} course={course} />;
