@@ -25,3 +25,18 @@ export interface RegisterCourse {
   maKhoaHoc: string;
   taiKhoan: string;
 }
+
+export interface CoursePagination {
+  count: number;
+  currentPage: number;
+  totalPages: number;
+  totalCount: number;
+  items: Course[];
+}
+
+export interface SearchParams {
+  tenKhoaHoc?: string | null;
+  page?: number | null;
+  pageSize?: number | null;
+  MaNhom?: string | null;
+}

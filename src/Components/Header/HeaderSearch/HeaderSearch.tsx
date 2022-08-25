@@ -1,9 +1,13 @@
 import { IconButton, InputAdornment, Paper, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { FieldErrors, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
 type Props = { showSearchField?: boolean };
 
 const HeaderSearch = ({ showSearchField }: Props) => {
+  const navigate = useNavigate();
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
       searchText: "",
@@ -12,7 +16,10 @@ const HeaderSearch = ({ showSearchField }: Props) => {
   });
 
   const onSuccess = (values: any) => {
-    console.log(values);
+    navigate({
+      pathname: "/search",
+      search: `?tenKhoaHoc=${values.searchText}&page=1&pageSize=9&MaNhom=GP01`,
+    });
   };
 
   const onError = (errors: FieldErrors<{ searchText: string }>) => {

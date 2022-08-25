@@ -12,6 +12,7 @@ const HomePage = lazy(() => import("Pages/HomePage/HomePage"));
 const DetailPage = lazy(() => import("Pages/DetailPage/DetailPage"));
 const LoginPage = lazy(() => import("Pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("Pages/RegisterPage/RegisterPage"));
+const SearchPage = lazy(() => import("Pages/SearchPage/SearchPage"));
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
               <Route path="" element={<HomeTemplate />}>
                 <Route index element={<HomePage />} />
                 <Route path="detail/:courseId" element={<DetailPage />} />
+                <Route path="search" element={<SearchPage />}>
+                  <Route path=":catalogId" element={<SearchPage />} />
+                </Route>
               </Route>
               <Route path="/" element={<LoginTemplate />}>
                 <Route

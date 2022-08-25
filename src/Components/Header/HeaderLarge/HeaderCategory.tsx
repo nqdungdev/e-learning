@@ -1,20 +1,32 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "configStore";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "configStore";
 import {
   FormControl,
   InputLabel,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import { getCourseCatalog } from "Slices/courseSlice";
 import { MenuItemText } from "_Playground/StyledComponents/HomePage/home.styled";
+import { useNavigate } from "react-router-dom";
 
 const HeaderCategory = () => {
   const [category, setCategory] = useState("");
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const { courseCatalog } = useSelector(
     (state: RootState) => state.courseSlice
   );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getCourseCatalog());
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (event: SelectChangeEvent) => {
     setCategory(event.target.value);
@@ -37,7 +49,16 @@ const HeaderCategory = () => {
       >
         {courseCatalog.map((category) => {
           return (
-            <MenuItemText key={category.maDanhMuc} value={category.maDanhMuc}>
+            <MenuItemText
+              key={category.maDanhMuc}
+              value={category.maDanhMuc}
+              onClick={() =>
+                navigate({
+                  pathname: `/search/${category.maDanhMuc}`,
+                  search: `?page=1&pageSize=9&MaNhom=GP01`,
+                })
+              }
+            >
               {category.tenDanhMuc}
             </MenuItemText>
           );

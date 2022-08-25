@@ -2,7 +2,8 @@ export interface Settings {
   dots: boolean;
   arrows: boolean;
   infinite: boolean;
-  speed: number;
+  speed?: number;
+  autoplaySpeed?: number;
   slidesToShow: any;
   slidesToScroll?: number;
   autoplay?: boolean;

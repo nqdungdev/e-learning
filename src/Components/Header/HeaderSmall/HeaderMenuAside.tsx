@@ -32,6 +32,7 @@ function important<T>(value: T): T {
 
 const HeaderMenuAside = ({ showMenuAside, onOpenConfirm }: Props) => {
   const [showCategory, setShowCategory] = useState(true);
+
   const { userLogin } = useSelector((state: RootState) => state.authSlice);
 
   return (
