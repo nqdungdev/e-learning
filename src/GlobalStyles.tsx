@@ -13,19 +13,19 @@ declare module "@mui/material/styles" {
 export const theme = createTheme({
   palette: {
     primary: {
-      light: "#39316e",
-      main: "#080b42",
-      dark: "#00001e",
+      light: "#352d66",
+      main: "#060830",
+      dark: "#000011",
       contrastText: "#fff",
     },
     secondary: {
       light: "#ff8a50",
       main: "#ff5722",
       dark: "#c41c00",
-      contrastText: "#000",
+      contrastText: "#fff",
     },
 
-    paper: { main: "#fdfcf0" },
+    paper: { light: "#fff", main: "#fdfcf0", contrastText: "#000" },
     error: { main: "#e71a0f", dark: "#c0150c" },
   },
 });
@@ -43,6 +43,9 @@ const GlobalStyles = createGlobalStyle`
   }
   a{
     text-decoration: none !important;
+  }
+  .swal2-container {
+    z-index: 20000 !important;
   }
 `;
 export default GlobalStyles;

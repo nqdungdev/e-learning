@@ -1,15 +1,15 @@
+import Donors from "Components/Donors/Donors";
 import Footer from "Components/Footer/Footer";
 import Header from "Components/Header/Header";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 
-type Props = {};
-
-const HomeTemplate = (props: Props) => {
+const HomeTemplate = () => {
   return (
     <Fragment>
       <Header />
       <Outlet />
+      <Donors />
       <Footer />
     </Fragment>
   );

@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import { Settings } from "Interfaces/slickInterfaces";
 import { getCourseByCategory } from "Slices/courseSlice";
-import { DetailTitle } from "_Playground/StyledComponents/DetailPage/detail.styled";
 import { Box, Container } from "@mui/material";
 import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
+import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
 
 const DetailRelated = () => {
   const { course, courseList } = useSelector(
@@ -27,30 +27,36 @@ const DetailRelated = () => {
     infinite: true,
     speed: 1000,
     autoplay: true,
-    // slidesToShow: courseList.length >= 4 ? 4 : courseList.length,
-    slidesToShow: 4,
+    slidesToShow:
+      courseList.length > 0 && courseList.length <= 4 ? courseList.length : 4,
     slidesToScroll: 2,
     rows: 1,
     responsive: [
       {
         breakpoint: 992,
         settings: {
-          // slidesToShow: courseList.length >= 3 ? 3 : courseList.length,
-          slidesToShow: 3,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 3,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          // slidesToShow: courseList.length >= 2 ? 2 : courseList.length,
-          slidesToShow: 2,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 2,
         },
       },
       {
         breakpoint: 576,
         settings: {
-          // slidesToShow: courseList.length >= 1 ? 1 : courseList.length,
-          slidesToShow: 1,
+          slidesToShow:
+            courseList.length > 0 && courseList.length <= 4
+              ? courseList.length
+              : 1,
           slidesToScroll: 1,
           rows: 3,
         },
@@ -60,7 +66,7 @@ const DetailRelated = () => {
   return (
     <Box id="schedule" sx={{ py: 5, bgcolor: "paper.main" }}>
       <Container>
-        <DetailTitle>Khóa học liên quan</DetailTitle>
+        <Title>Khóa học liên quan</Title>
         <Slider {...settings}>
           {courseList?.map((course) => {
             return <CourseItem key={course.maKhoaHoc} course={course} />;

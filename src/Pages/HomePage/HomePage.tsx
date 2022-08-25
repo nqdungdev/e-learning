@@ -1,10 +1,9 @@
 import { Fragment, useEffect } from "react";
 import Banner from "./Banner/Banner";
 import CourseList from "./CourseList/CourseList";
+import Features from "./Features/Features";
 
-type Props = {};
-
-const HomePage = (props: Props) => {
+const HomePage = () => {
   useEffect(() => {
     document.title = "Trang chủ";
   }, []);
@@ -12,6 +11,7 @@ const HomePage = (props: Props) => {
     <Fragment>
       <Banner />
       <CourseList />
+      <Features />
     </Fragment>
   );
 };
