@@ -116,10 +116,44 @@ export const postRegisterCourse = createAsyncThunk(
   }
 );
 
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+type Order = "asc" | "desc";
+
+function getComparator<Key extends keyof Course>(
+  order: Order,
+  orderBy: Key
+): (
+  a: { [key in Key]: number | string | boolean },
+  b: { [key in Key]: number | string | boolean }
+) => number {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
 const courseSlice = createSlice({
   name: "course",
   initialState,
-  reducers: {},
+  reducers: {
+    increaseSort: (state) => {
+      state.courseList.sort(getComparator("asc", "tenKhoaHoc"));
+      state.courseListPaging?.items.sort(getComparator("asc", "tenKhoaHoc"));
+    },
+
+    decreaseSort: (state) => {
+      state.courseList.sort(getComparator("desc", "tenKhoaHoc"));
+      state.courseListPaging?.items.sort(getComparator("desc", "tenKhoaHoc"));
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCourseList.pending, (state) => {
       state.isCourseListLoading = true;
@@ -200,5 +234,7 @@ const courseSlice = createSlice({
     });
   },
 });
+
+export const { increaseSort, decreaseSort } = courseSlice.actions;
 
 export default courseSlice.reducer;

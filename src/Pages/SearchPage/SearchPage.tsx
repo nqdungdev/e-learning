@@ -4,32 +4,33 @@ import {
   Grid,
   Pagination,
   Stack,
-  Typography,
+  Alert,
+  Button,
 } from "@mui/material";
 import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "configStore";
 import {
   createSearchParams,
-  useNavigate,
   useParams,
   useSearchParams,
 } from "react-router-dom";
 import { getCourseByCategory, getCourseListPaging } from "Slices/courseSlice";
 import SearchAside from "./SearchAside/SearchAside";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import { Course, SearchParams } from "Interfaces/courseInterface";
+import BreadcrumbNav from "Pages/DetailPage/BreadcrumbNav/BreadcrumbNav";
 
 type Props = {};
 
 const SearchPage = (props: Props) => {
+  const [showAside, setShowAside] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { catalogId } = useParams();
 
   const dispatch = useDispatch<AppDispatch>();
-
-  const navigate = useNavigate();
 
   const { courseList, courseListPaging, errorCourseListPaging } = useSelector(
     (state: RootState) => state.courseSlice
@@ -42,7 +43,8 @@ const SearchPage = (props: Props) => {
     MaNhom: searchParams.get("MaNhom"),
   };
 
-  console.log(courseList?.slice(9));
+  console.log(courseList.length);
+  console.log(courseListPaging);
 
   useEffect(() => {
     console.log(catalogId);
@@ -58,42 +60,127 @@ const SearchPage = (props: Props) => {
     //   dispatch(getCourseListPaging());
     // }
     return () => {};
-  }, [queryParams.page, queryParams.tenKhoaHoc]);
+  }, [queryParams.page, queryParams.pageSize, queryParams.tenKhoaHoc]);
 
   console.log(2);
 
   return (
     <Box sx={{ py: 5, mt: "5rem", bgcolor: "paper.main" }}>
       <Container>
+        <BreadcrumbNav secondLevel={catalogId} color="paper.contrastText" />
         {errorCourseListPaging && (
-          <Typography>{errorCourseListPaging}</Typography>
+          <Alert severity="error">{errorCourseListPaging}</Alert>
         )}
+        <Stack alignItems="flex-start">
+          <Button
+            onClick={() => {
+              setShowAside((showAside) => (showAside = !showAside));
+              setSearchParams(
+                createSearchParams({
+                  tenKhoaHoc: searchParams?.get("tenKhoaHoc") || "",
+                  page: searchParams?.get("page") || "1",
+                  pageSize: !showAside ? "6" : "8",
+                  MaNhom: "GP01",
+                })
+              );
+            }}
+          >
+            <FilterListIcon />
+          </Button>
+        </Stack>
         <Grid container>
-          <Grid item xs={3}>
-            <SearchAside />
+          <Grid
+            item
+            xs={showAside ? 3 : 0}
+            sx={{ visibility: showAside ? "visible" : "hidden" }}
+          >
+            <Box
+              sx={{
+                width: showAside ? "100%" : 0,
+                overflow: "hidden",
+                transition: "all 0.4s",
+              }}
+            >
+              <SearchAside />
+            </Box>
           </Grid>
 
-          <Grid item xs={9}>
+          <Grid
+            item
+            xs={showAside ? 9 : 12}
+            sx={{ transition: showAside ? "all 0s" : "all 0.4s 0.4s" }}
+          >
             <Grid container>
               {catalogId
                 ? queryParams.page === 1
-                  ? courseList.slice(0, 9).map((course: Course) => {
+                  ? showAside
+                    ? courseList.slice(0, 6).map((course: Course) => {
+                        return (
+                          <Grid
+                            item
+                            xs={showAside ? 4 : 3}
+                            sx={{
+                              transition: "all 0.4s",
+                            }}
+                            key={course.maKhoaHoc}
+                          >
+                            <CourseItem course={course} />
+                          </Grid>
+                        );
+                      })
+                    : courseList.slice(0, 8).map((course: Course) => {
+                        return (
+                          <Grid
+                            item
+                            xs={showAside ? 4 : 3}
+                            sx={{
+                              transition: "all 0.4s",
+                            }}
+                            key={course.maKhoaHoc}
+                          >
+                            <CourseItem course={course} />
+                          </Grid>
+                        );
+                      })
+                  : showAside
+                  ? courseList.slice(6).map((course: Course) => {
                       return (
-                        <Grid item xs={4} key={course.maKhoaHoc}>
+                        <Grid
+                          item
+                          xs={showAside ? 4 : 3}
+                          sx={{
+                            transition: "all 0.4s",
+                          }}
+                          key={course.maKhoaHoc}
+                        >
                           <CourseItem course={course} />
                         </Grid>
                       );
                     })
-                  : courseList.slice(9).map((course: Course) => {
+                  : courseList.slice(8).map((course: Course) => {
                       return (
-                        <Grid item xs={4} key={course.maKhoaHoc}>
+                        <Grid
+                          item
+                          xs={showAside ? 4 : 3}
+                          sx={{
+                            transition: "all 0.4s",
+                          }}
+                          key={course.maKhoaHoc}
+                        >
                           <CourseItem course={course} />
                         </Grid>
                       );
                     })
                 : courseListPaging?.items?.map((course: Course) => {
                     return (
-                      <Grid item xs={4} key={course.maKhoaHoc}>
+                      <Grid
+                        item
+                        xs={showAside ? 4 : 3}
+                        sx={{
+                          transition: "all 0.4s",
+                        }}
+                        key={course.maKhoaHoc}
+                      >
                         <CourseItem course={course} />
                       </Grid>
                     );
@@ -104,9 +191,17 @@ const SearchPage = (props: Props) => {
                   <Stack direction="row" justifyContent="center">
                     <Pagination
                       count={
-                        (courseList.length > 9 && courseList.length / 10 + 1) ||
-                        (courseList.length <= 9 && 1) ||
-                        courseListPaging.totalPages
+                        showAside
+                          ? courseList.length !== 0
+                            ? courseList.length > 6
+                              ? Math.floor(courseList.length / 7) + 1
+                              : 1
+                            : courseListPaging.totalPages
+                          : courseList
+                          ? courseList.length > 8
+                            ? Math.floor(courseList.length / 9) + 1
+                            : 1
+                          : courseListPaging.totalPages
                       }
                       color="secondary"
                       showFirstButton
@@ -120,7 +215,7 @@ const SearchPage = (props: Props) => {
                           createSearchParams({
                             tenKhoaHoc: searchParams?.get("tenKhoaHoc") || "",
                             page: `${value}`,
-                            pageSize: "9",
+                            pageSize: showAside ? "6" : "8",
                             MaNhom: "GP01",
                           })
                         );

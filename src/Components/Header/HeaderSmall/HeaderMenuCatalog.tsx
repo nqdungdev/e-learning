@@ -42,7 +42,7 @@ const HeaderMenuCatalog = ({ showCategory }: Props) => {
             onClick={() =>
               navigate({
                 pathname: `/search/${category.maDanhMuc}`,
-                search: `?page=1&pageSize=9&MaNhom=GP01`,
+                search: `?page=1&pageSize=6&MaNhom=GP01`,
               })
             }
           >

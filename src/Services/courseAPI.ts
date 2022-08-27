@@ -33,7 +33,7 @@ const courseAPI = {
     payload?: SearchParams,
     tenKhoaHoc: string | null = "",
     page: number | null = 1,
-    pageSize: number | null = 9,
+    pageSize: number | null = 6,
     MaNhom: string | null = "GP01"
   ) => {
     return axiosClient.get<CoursePagination>(

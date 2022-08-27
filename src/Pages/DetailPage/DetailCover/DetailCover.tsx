@@ -126,7 +126,8 @@ const DetailCover = () => {
         <Grid container spacing={2}>
           <Grid
             item
-            xs={8}
+            xs={12}
+            sm={8}
             sx={{
               display: "flex",
               justifyContent: "center",
@@ -182,7 +183,8 @@ const DetailCover = () => {
           </Grid>
           <Grid
             item
-            xs={4}
+            xs={12}
+            sm={4}
             sx={{
               display: "flex",
               justifyContent: "center",
