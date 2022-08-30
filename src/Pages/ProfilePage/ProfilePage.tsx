@@ -1,0 +1,50 @@
+import { AppDispatch, RootState } from "configStore";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { postUserInfo } from "Slices/userSlice";
+import { Box, Container, Grid } from "@mui/material";
+import UserInfo from "./UserInfo/UserInfo";
+import LoadingAPI from "Components/LoadingAPI/LoadingAPI";
+import UserCatalog from "./UserCatalog/UserCatalog";
+import UserPassword from "./UserPassword/UserPassword";
+import RegisteredCourse from "./RegisteredCourse/RegisteredCourse";
+
+const ProfilePage = () => {
+  const [selected, setSelected] = useState<number>(1);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { isUserInfoLoading } = useSelector(
+    (state: RootState) => state.userSlice
+  );
+  useEffect(() => {
+    dispatch(postUserInfo());
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSelect = (values: number) => {
+    setSelected(values);
+  };
+  if (isUserInfoLoading) {
+    return <LoadingAPI />;
+  }
+
+  return (
+    <Box sx={{ mt: "5rem", py: 5 }} bgcolor="paper.main">
+      <Container>
+        <Grid container>
+          <Grid item xs={12} sm={3}>
+            <UserCatalog onSelect={handleSelect} />
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            {selected === 1 && <UserInfo />}
+            {selected === 2 && <UserPassword />}
+            {selected === 3 && <RegisteredCourse />}
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
+
+export default ProfilePage;

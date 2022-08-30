@@ -15,7 +15,7 @@ const initialState: State = {
 };
 
 export const postLoginUser = createAsyncThunk(
-  `user/login`,
+  `user/postLoginUser`,
   async (payload: LoginValues) => {
     try {
       const data = userAPI.postLoginUser(payload);

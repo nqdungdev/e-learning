@@ -15,9 +15,20 @@ export interface RegisterValues {
 export interface User {
   taiKhoan: string;
   hoTen: string;
+  matKhau?: string;
   email: string;
   soDT: string;
   maNhom: string;
   maLoaiNguoiDung: string;
+  chiTietKhoaHocGhiDanh: {
+    maKhoaHoc: string;
+    tenKhoaHoc: string;
+    biDanh: string;
+    moTa: string;
+    luotXem: number;
+    hinhAnh: string;
+    ngayTao: string;
+    danhGia: number;
+  };
   accessToken: string;
 }

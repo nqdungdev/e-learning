@@ -13,6 +13,18 @@ const userAPI = {
       maNhom: "GP01",
     });
   },
+  postUserInfo: () => {
+    return axiosClient.post<User>("QuanLyNguoiDung/ThongTinTaiKhoan");
+  },
+  putUpdateUser: (payload: RegisterValues) => {
+    return axiosClient.put<RegisterValues>(
+      "QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+      {
+        ...payload,
+        maNhom: "GP01",
+      }
+    );
+  },
 };
 
 export default userAPI;
