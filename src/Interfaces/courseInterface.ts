@@ -33,10 +33,19 @@ export interface CoursePagination {
   totalCount: number;
   items: Course[];
 }
-
 export interface SearchParams {
   tenKhoaHoc?: string | null;
   page?: number | null;
   pageSize?: number | null;
   MaNhom?: string | null;
+}
+export interface RegisteredCourseDetail {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+  biDanh: string;
+  moTa: string;
+  luotXem: number;
+  hinhAnh: string;
+  ngayTao: string;
+  danhGia: number;
 }

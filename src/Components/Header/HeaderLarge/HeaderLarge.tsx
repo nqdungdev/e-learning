@@ -65,7 +65,7 @@ const HeaderLarge = ({ onOpenConfirm }: Props) => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <NavLink to={"/user"}>
+              <NavLink to={"/profile"}>
                 <Stack
                   direction="row"
                   justifyContent="space-between"
