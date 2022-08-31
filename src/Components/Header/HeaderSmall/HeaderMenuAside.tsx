@@ -62,7 +62,7 @@ const HeaderMenuAside = ({ showMenuAside, onOpenConfirm }: Props) => {
             alignItems="center"
             width="100%"
           >
-            <NavLink to={"/user"}>
+            <NavLink to={"/profile"}>
               <IconButton sx={{ p: 0, height: "max-content" }}>
                 <Avatar
                   alt="https://i.pravatar.cc"

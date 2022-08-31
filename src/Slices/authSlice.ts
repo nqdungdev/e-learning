@@ -15,7 +15,7 @@ const initialState: State = {
 };
 
 export const postLoginUser = createAsyncThunk(
-  `user/login`,
+  `user/postLoginUser`,
   async (payload: LoginValues) => {
     try {
       const data = userAPI.postLoginUser(payload);
@@ -33,6 +33,9 @@ const authSlice = createSlice({
     logoutUser: (state) => {
       state.userLogin = null;
       localStorage.setItem("user", JSON.stringify(null));
+    },
+    changeName: (state) => {
+      state.userLogin = JSON.parse(localStorage.getItem("user") as string);
     },
   },
   extraReducers: (builder) => {
@@ -53,6 +56,6 @@ const authSlice = createSlice({
     });
   },
 });
-export const { logoutUser } = authSlice.actions;
+export const { logoutUser, changeName } = authSlice.actions;
 
 export default authSlice.reducer;

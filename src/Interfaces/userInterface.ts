@@ -1,3 +1,4 @@
+import { RegisteredCourseDetail } from "./courseInterface";
 export interface LoginValues {
   taiKhoan: string;
   matKhau: string;
@@ -15,9 +16,11 @@ export interface RegisterValues {
 export interface User {
   taiKhoan: string;
   hoTen: string;
+  matKhau: string;
   email: string;
   soDT: string;
   maNhom: string;
   maLoaiNguoiDung: string;
+  chiTietKhoaHocGhiDanh?: RegisteredCourseDetail[];
   accessToken: string;
 }
