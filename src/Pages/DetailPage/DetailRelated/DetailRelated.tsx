@@ -64,7 +64,7 @@ const DetailRelated = () => {
     ],
   };
   return (
-    <Box id="schedule" sx={{ py: 5, bgcolor: "paper.main" }}>
+    <Box sx={{ py: 5, bgcolor: "paper.main" }}>
       <Container>
         <Title>Khóa học liên quan</Title>
         <Slider {...settings}>

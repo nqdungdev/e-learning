@@ -7,11 +7,13 @@ import LoadingLazy from "Components/LoadingLazy/LoadingLazy";
 import HomeTemplate from "Templates/HomeTemplate/HomeTemplate";
 import LoginTemplate from "Templates/LoginTemplate/LoginTemplate";
 import ProtectedLogin from "Routes/ProtectedLogin";
+import ProtectedProfile from "Routes/ProtectedProfile";
 
 const HomePage = lazy(() => import("Pages/HomePage/HomePage"));
 const DetailPage = lazy(() => import("Pages/DetailPage/DetailPage"));
 const LoginPage = lazy(() => import("Pages/LoginPage/LoginPage"));
 const RegisterPage = lazy(() => import("Pages/RegisterPage/RegisterPage"));
+const SearchPage = lazy(() => import("Pages/SearchPage/SearchPage"));
 const ProfilePage = lazy(() => import("Pages/ProfilePage/ProfilePage"));
 
 function App() {
@@ -24,7 +26,17 @@ function App() {
               <Route path="" element={<HomeTemplate />}>
                 <Route index element={<HomePage />} />
                 <Route path="detail/:courseId" element={<DetailPage />} />
-                <Route path="profile" element={<ProfilePage />} />
+                <Route path="search" element={<SearchPage />}>
+                  <Route path=":catalogId" element={<SearchPage />} />
+                </Route>
+                <Route
+                  path="profile"
+                  element={
+                    <ProtectedProfile>
+                      <ProfilePage />
+                    </ProtectedProfile>
+                  }
+                />
               </Route>
               <Route path="/" element={<LoginTemplate />}>
                 <Route

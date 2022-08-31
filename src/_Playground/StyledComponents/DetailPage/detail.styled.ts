@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Typography } from "@mui/material";
 
 // Breadcrumb
-export const BreadcrumbText = styled(Typography)`
-  color: ${theme.palette.primary.contrastText};
+export const BreadcrumbText = styled(Typography)<{ color?: string }>`
+  color: ${({ color }) => (color ? color : theme.palette.primary.contrastText)};
   font-weight: 500;
   &:hover {
     color: ${theme.palette.secondary.main};

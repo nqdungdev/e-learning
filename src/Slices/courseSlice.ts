@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   Course,
   CourseCatalog,
+  CoursePagination,
   RegisterCourse,
+  SearchParams,
 } from "Interfaces/courseInterface";
 import courseAPI from "Services/courseAPI";
 
@@ -13,6 +15,9 @@ interface State {
   courseList: Course[];
   isCourseListLoading: boolean;
   errorCourseList: string | null;
+  courseListPaging: CoursePagination | null;
+  isCourseListPagingLoading: boolean;
+  errorCourseListPaging: string | null;
   course: Course | null;
   isCourseLoading: boolean;
   errorCourse: string | null;
@@ -28,6 +33,9 @@ const initialState: State = {
   courseList: [],
   isCourseListLoading: false,
   errorCourseList: null,
+  courseListPaging: null,
+  isCourseListPagingLoading: false,
+  errorCourseListPaging: null,
   course: null,
   isCourseLoading: false,
   errorCourse: null,
@@ -35,6 +43,18 @@ const initialState: State = {
   isRegisterCourseLoading: false,
   errorRegisterCourse: null,
 };
+
+export const getCourseList = createAsyncThunk(
+  `course/getCourseList`,
+  async (payload?: string) => {
+    try {
+      const data = await courseAPI.getCourseList(payload);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 export const getCourseCatalog = createAsyncThunk(
   `course/getCourseCatalog`,
@@ -53,6 +73,18 @@ export const getCourseByCategory = createAsyncThunk(
   async (payload?: string) => {
     try {
       const data = await courseAPI.getCourseByCategory(payload);
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const getCourseListPaging = createAsyncThunk(
+  `course/getCourseListPaging`,
+  async (payload?: SearchParams) => {
+    try {
+      const data = await courseAPI.getCourseListPaging(payload);
       return data;
     } catch (error) {
       throw error;
@@ -84,11 +116,71 @@ export const postRegisterCourse = createAsyncThunk(
   }
 );
 
+function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+type Order = "asc" | "desc";
+
+function getComparator<Key extends keyof Course>(
+  order: Order,
+  orderBy: Key
+): (
+  a: { [key in Key]: number | string | boolean },
+  b: { [key in Key]: number | string | boolean }
+) => number {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
 const courseSlice = createSlice({
   name: "course",
   initialState,
-  reducers: {},
+  reducers: {
+    increaseSort: (state) => {
+      state.courseList.sort(getComparator("asc", "tenKhoaHoc"));
+      state.courseListPaging?.items.sort(getComparator("asc", "tenKhoaHoc"));
+    },
+
+    decreaseSort: (state) => {
+      state.courseList.sort(getComparator("desc", "tenKhoaHoc"));
+      state.courseListPaging?.items.sort(getComparator("desc", "tenKhoaHoc"));
+    },
+  },
   extraReducers: (builder) => {
+    builder.addCase(getCourseList.pending, (state) => {
+      state.isCourseListLoading = true;
+    });
+    builder.addCase(getCourseList.fulfilled, (state, { payload }) => {
+      state.errorCourseList = null;
+      state.isCourseListLoading = false;
+      state.courseList = payload;
+    });
+    builder.addCase(getCourseList.rejected, (state, { error }) => {
+      state.isCourseListLoading = false;
+      state.errorCourseList = error.message as string;
+    });
+    //------------------------------------------------------------------
+    builder.addCase(getCourseListPaging.pending, (state) => {
+      state.isCourseListPagingLoading = true;
+    });
+    builder.addCase(getCourseListPaging.fulfilled, (state, { payload }) => {
+      state.errorCourseListPaging = null;
+      state.isCourseListPagingLoading = false;
+      state.courseListPaging = payload;
+    });
+    builder.addCase(getCourseListPaging.rejected, (state, { error }) => {
+      state.isCourseListPagingLoading = false;
+      state.errorCourseListPaging = error.message as string;
+    });
+    //------------------------------------------------------------------
     builder.addCase(getCourseCatalog.pending, (state) => {
       state.isCourseCatalogLoading = true;
     });
@@ -142,5 +234,7 @@ const courseSlice = createSlice({
     });
   },
 });
+
+export const { increaseSort, decreaseSort } = courseSlice.actions;
 
 export default courseSlice.reducer;

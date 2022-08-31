@@ -17,7 +17,8 @@ const CourseList = (props: Props) => {
     dots: true,
     arrows: false,
     infinite: true,
-    speed: 5000,
+    autoplaySpeed: 5000,
+    speed: 2000,
     autoplay: true,
     slidesToShow:
       courseList.length > 0 && courseList.length <= 4 ? courseList.length : 4,
