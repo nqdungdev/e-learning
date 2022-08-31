@@ -1,11 +1,11 @@
-import { Box, TextField, Button, Stack, FormHelperText } from "@mui/material";
+import { useState } from "react";
 import { AppDispatch, RootState } from "configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useLayoutEffect } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { putUpdateUser } from "Slices/userSlice";
+import { Box, TextField, Button, Stack, FormHelperText } from "@mui/material";
 import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
-
 import { RegisterValues } from "Interfaces/userInterface";
 import SweetAlert from "react-sweetalert2";
 import { schemaPassword } from "./schemaPassword";
@@ -20,12 +20,9 @@ export interface UpdatePassword {
 const UserPassword = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
-  const [openUpdate, setOpenUpdate] = useState(false);
-  const [readOnly, setReadOnly] = useState(true);
+  const [readOnly] = useState(true);
   const dispatch = useDispatch<AppDispatch>();
-  const { userInfo, isUserInfoLoading } = useSelector(
-    (state: RootState) => state.userSlice
-  );
+  const { userInfo } = useSelector((state: RootState) => state.userSlice);
 
   const {
     register,
@@ -43,7 +40,10 @@ const UserPassword = () => {
   });
 
   const onSubmit = (values: UpdatePassword) => {
-    //   delete values["passwordConfirm"];
+    console.log({ ...userInfo, matKhau: values.newPassword });
+    setOpenConfirm(false);
+    dispatch(putUpdateUser({ ...userInfo!, matKhau: values.newPassword }));
+    setOpenSuccess(true);
   };
   const onError = (error: FieldErrors<RegisterValues>) => {
     console.log(error);
@@ -53,7 +53,7 @@ const UserPassword = () => {
       <SweetAlert
         show={openConfirm}
         icon="question"
-        title="Bạn có muốn cập nhật?"
+        title="Bạn có muốn thay đổi mật khẩu?"
         confirmButtonText="Đồng ý"
         cancelButtonText="Hủy bỏ"
         showCancelButton={true}
@@ -66,7 +66,7 @@ const UserPassword = () => {
       <SweetAlert
         show={openSuccess}
         icon="success"
-        title="Thay đổi thông tin thành công!!!"
+        title="Thay đổi mật khẩu thành công!!!"
         confirmButtonText="Đồng ý"
         timer={2000}
         onConfirm={() => {
@@ -76,7 +76,7 @@ const UserPassword = () => {
           setOpenSuccess(false);
         }}
       />
-      <Title>Thay đổi mật khẩu</Title>
+      <Title style={{ textAlign: "center" }}>Thay đổi mật khẩu</Title>
       <Box component="form" onSubmit={handleSubmit(onSubmit, onError)}>
         <TextField
           variant="outlined"
@@ -134,9 +134,12 @@ const UserPassword = () => {
         <Stack mt={2} direction="row" justifyContent="flex-end">
           <Button
             variant="contained"
-            color="success"
-            // type="submit"
-            sx={{ mr: 2 }}
+            color="primary"
+            sx={{
+              color: "primary.contrastText",
+              textTransform: "capitalize",
+              width: { xs: "100%", md: "15rem" },
+            }}
             onClick={() => setOpenConfirm(true)}
           >
             Thay đổi mật khẩu

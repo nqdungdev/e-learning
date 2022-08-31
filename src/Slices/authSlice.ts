@@ -34,6 +34,9 @@ const authSlice = createSlice({
       state.userLogin = null;
       localStorage.setItem("user", JSON.stringify(null));
     },
+    changeName: (state) => {
+      state.userLogin = JSON.parse(localStorage.getItem("user") as string);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(postLoginUser.pending, (state) => {
@@ -53,6 +56,6 @@ const authSlice = createSlice({
     });
   },
 });
-export const { logoutUser } = authSlice.actions;
+export const { logoutUser, changeName } = authSlice.actions;
 
 export default authSlice.reducer;

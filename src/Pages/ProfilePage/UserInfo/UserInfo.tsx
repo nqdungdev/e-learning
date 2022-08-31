@@ -1,11 +1,12 @@
-import { Box, TextField, Button, Stack, FormHelperText } from "@mui/material";
+import { useState } from "react";
 import { AppDispatch, RootState } from "configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { postUserInfo, putUpdateUser } from "Slices/userSlice";
+import { changeName } from "Slices/authSlice";
+import { Box, TextField, Button, Stack, FormHelperText } from "@mui/material";
 import { RegisterValues } from "Interfaces/userInterface";
-import { putUpdateUser } from "Slices/userSlice";
 import SweetAlert from "react-sweetalert2";
 import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
 import { schemaInfo } from "./schemaInfo";
@@ -36,7 +37,10 @@ const UserInfo = () => {
   const onSubmit = (values: RegisterValues) => {
     console.log(values);
     setOpenConfirm(false);
-    dispatch(putUpdateUser({ ...userInfo, ...values }));
+    dispatch(putUpdateUser({ ...userInfo, ...values })).then(() => {
+      dispatch(changeName());
+      dispatch(postUserInfo());
+    });
     setOpenSuccess(true);
     setOpenUpdate(false);
     setReadOnly(true);
@@ -50,7 +54,7 @@ const UserInfo = () => {
       <SweetAlert
         show={openConfirm}
         icon="question"
-        title="Bạn có muốn cập nhật?"
+        title="Bạn có muốn thay đổi thông tin?"
         confirmButtonText="Đồng ý"
         cancelButtonText="Hủy bỏ"
         showCancelButton={true}
@@ -73,7 +77,7 @@ const UserInfo = () => {
           setOpenSuccess(false);
         }}
       />
-      <Title>Thông tin tài khoản</Title>
+      <Title style={{ textAlign: "center" }}>Thông tin tài khoản</Title>
 
       <Box component="form" onSubmit={handleSubmit(onSubmit, onError)}>
         <TextField
@@ -150,20 +154,26 @@ const UserInfo = () => {
           <Stack mt={2} direction="row" justifyContent="flex-end">
             <Button
               variant="contained"
-              color="success"
+              color="secondary"
               // type="submit"
-              sx={{ mr: 2 }}
+              sx={{
+                color: "secondary.contrastText",
+                textTransform: "capitalize",
+                width: "5rem",
+                mr: 2,
+              }}
               onClick={() => setOpenConfirm(true)}
             >
               Lưu
             </Button>
-            <Box
+            <Button
+              variant="contained"
+              color="primary"
               sx={{
-                bgcolor: "primary.main",
-                p: 2,
-                borderRadius: "4px",
-                cursor: "pointer",
                 color: "primary.contrastText",
+                textTransform: "capitalize",
+                width: "5rem",
+                mr: 2,
               }}
               onClick={() => {
                 setOpenUpdate(false);
@@ -171,18 +181,17 @@ const UserInfo = () => {
               }}
             >
               Hủy
-            </Box>
+            </Button>
           </Stack>
         ) : (
           <Stack mt={2} direction="row" justifyContent="flex-end">
-            <Box
-              bgcolor="info"
+            <Button
+              variant="contained"
+              color="primary"
               sx={{
-                bgcolor: "info.main",
-                p: 2,
-                borderRadius: "8px",
-                cursor: "pointer",
                 color: "primary.contrastText",
+                textTransform: "capitalize",
+                width: { xs: "100%", md: "15rem" },
               }}
               onClick={() => {
                 setOpenUpdate(true);
@@ -190,7 +199,7 @@ const UserInfo = () => {
               }}
             >
               Thay đổi thông tin
-            </Box>
+            </Button>
           </Stack>
         )}
       </Box>

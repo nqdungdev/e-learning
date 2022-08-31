@@ -1,79 +1,97 @@
-import { AppDispatch, RootState } from "configStore";
-import { useDispatch, useSelector } from "react-redux";
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Course } from "Interfaces/courseInterface";
-import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
-import { Box } from "@mui/material";
+import { SyntheticEvent } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "configStore";
+import { useNavigate } from "react-router-dom";
+import { RegisteredCourseDetail } from "Interfaces/courseInterface";
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import {
+  CardTitle,
+  Title,
+} from "_Playground/StyledComponents/HomePage/home.styled";
+import Placeholder200x150 from "Assets/img/Placeholder/200x150.jpg";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
+const RegisteredCourse = () => {
+  const navigate = useNavigate();
+  const { userInfo } = useSelector((state: RootState) => state.userSlice);
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-type Props = {};
-
-const RegisteredCourse = (props: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { userInfo, isUserInfoLoading } = useSelector(
-    (state: RootState) => state.userSlice
-  );
-
-  const chiTietKhoaHocGhiDanh: any = userInfo?.chiTietKhoaHocGhiDanh;
+  const chiTietKhoaHocGhiDanh: RegisteredCourseDetail[] | undefined =
+    userInfo?.chiTietKhoaHocGhiDanh;
 
   console.log(userInfo);
   return (
     <Box>
-      <Title>Khóa học đã đăng ký</Title>
+      <Title style={{ textAlign: "center" }}>Khóa học đã đăng ký</Title>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+        <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell align="center">STT</TableCell>
-              <TableCell>Tên khóa học</TableCell>
-              <TableCell align="right">Hình ảnh</TableCell>
-              <TableCell align="right">Chi tiết</TableCell>
+              <TableCell align="center">
+                <CardTitle>STT</CardTitle>
+              </TableCell>
+              <TableCell align="left">
+                <CardTitle>Tên khóa học</CardTitle>
+              </TableCell>
+              <TableCell
+                align="right"
+                sx={{ display: { xs: "none", md: "table-cell" } }}
+              >
+                <CardTitle>Hình ảnh</CardTitle>
+              </TableCell>
+              <TableCell align="center">
+                <CardTitle>Chi tiết</CardTitle>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {chiTietKhoaHocGhiDanh?.map((row: any, index: number) => (
-              <TableRow
-                key={row.maKhoaHoc}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row" align="center">
-                  {index}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {row.tenKhoaHoc}
-                </TableCell>
-                <TableCell align="right">
-                  <img src={row.hinhAnh} alt={row.hinhAnh} width={200} />
-                </TableCell>
-                {/* <TableCell align="right">{row.moTa}</TableCell> */}
-                {/* <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell> */}
-              </TableRow>
-            ))}
+            {chiTietKhoaHocGhiDanh?.map(
+              (course: RegisteredCourseDetail, index: number) => (
+                <TableRow
+                  key={course.maKhoaHoc}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row" align="center">
+                    {index}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {course.tenKhoaHoc}
+                  </TableCell>
+                  <TableCell
+                    align="right"
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    <img
+                      src={course.hinhAnh}
+                      onError={(
+                        error: SyntheticEvent<HTMLImageElement, Event>
+                      ) => (error.currentTarget.src = Placeholder200x150)}
+                      alt={course.hinhAnh}
+                      width={200}
+                    />
+                  </TableCell>
+                  <TableCell align="center">
+                    <Button
+                      variant="contained"
+                      size="small"
+                      color="secondary"
+                      sx={{ color: "secondary.contrastText" }}
+                      onClick={() => navigate(`/detail/${course.maKhoaHoc}`)}
+                    >
+                      Chi tiết
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>

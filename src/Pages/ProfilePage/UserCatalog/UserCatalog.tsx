@@ -1,4 +1,4 @@
-import { Stack, Box, Typography, Button } from "@mui/material";
+import { Stack, Box, Button } from "@mui/material";
 import { RootState } from "configStore";
 import { useSelector } from "react-redux";
 import { CardTitle } from "_Playground/StyledComponents/HomePage/home.styled";
@@ -9,9 +9,13 @@ type Props = {
 
 const UserCatalog = ({ onSelect }: Props) => {
   const { userInfo } = useSelector((state: RootState) => state.userSlice);
-  console.log(userInfo);
+
   return (
-    <Stack px={4} direction="column" alignItems="center">
+    <Stack
+      sx={{ mb: { xs: 5, md: 0 }, pr: { xs: 0, sm: 4 } }}
+      direction="column"
+      alignItems="center"
+    >
       <Box sx={{ borderRadius: "50%", overflow: "hidden" }}>
         <img
           src="https://i.pravatar.cc"

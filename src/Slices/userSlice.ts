@@ -97,6 +97,15 @@ const userSlice = createSlice({
       state.errorUserUpdate = null;
       state.isUserUpdateLoading = false;
       state.userUpdate = payload;
+
+      const user = JSON.parse(localStorage.getItem("user") as string);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          hoTen: payload.hoTen,
+        })
+      );
     });
     builder.addCase(putUpdateUser.rejected, (state, { error }) => {
       state.isUserUpdateLoading = false;
