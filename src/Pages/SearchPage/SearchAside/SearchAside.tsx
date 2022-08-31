@@ -22,7 +22,7 @@ const SearchAside = () => {
   const { courseCatalog } = useSelector(
     (state: RootState) => state.courseSlice
   );
-  console.log(1);
+
   return (
     <Box>
       <Divider />
@@ -64,8 +64,8 @@ const SearchAside = () => {
                 })
               }
             >
-              <AddIcon sx={{ ml: 2 }} />
-              <Typography ml={2}> {category.tenDanhMuc}</Typography>
+              <AddIcon sx={{ ml: 1 }} />
+              <Typography ml={1}> {category.tenDanhMuc}</Typography>
             </MenuItemText>
           );
         })}
@@ -99,15 +99,9 @@ const SearchAside = () => {
             py: 1,
           }}
           onClick={() => dispatch(increaseSort())}
-          // onClick={() =>
-          // navigate({
-          // pathname: `/search/${category.maDanhMuc}`,
-          // search: `?page=1&pageSize=9&MaNhom=GP01`,
-          // })
-          // }
         >
-          <AddIcon sx={{ ml: 2 }} />
-          <Typography ml={2}>A-&gt;Z</Typography>
+          <AddIcon sx={{ ml: 1 }} />
+          <Typography ml={1}>A-&gt;Z</Typography>
         </MenuItemText>
 
         <MenuItemText
@@ -115,15 +109,9 @@ const SearchAside = () => {
             py: 1,
           }}
           onClick={() => dispatch(decreaseSort())}
-          // onClick={() =>
-          // navigate({
-          // pathname: `/search/${category.maDanhMuc}`,
-          // search: `?page=1&pageSize=9&MaNhom=GP01`,
-          // })
-          // }
         >
-          <AddIcon sx={{ ml: 2 }} />
-          <Typography ml={2}>Z-&gt;A</Typography>
+          <AddIcon sx={{ ml: 1 }} />
+          <Typography ml={1}>Z-&gt;A</Typography>
         </MenuItemText>
       </Box>
       <Divider />

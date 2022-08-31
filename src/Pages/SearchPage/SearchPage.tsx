@@ -1,13 +1,3 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Pagination,
-  Stack,
-  Alert,
-  Button,
-} from "@mui/material";
-import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "configStore";
@@ -17,15 +7,24 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { getCourseByCategory, getCourseListPaging } from "Slices/courseSlice";
-import SearchAside from "./SearchAside/SearchAside";
+import {
+  Box,
+  Container,
+  Grid,
+  Pagination,
+  Stack,
+  Alert,
+  Button,
+} from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { Course, SearchParams } from "Interfaces/courseInterface";
+import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
+import SearchAside from "./SearchAside/SearchAside";
 import BreadcrumbNav from "Pages/DetailPage/BreadcrumbNav/BreadcrumbNav";
+import { Course, SearchParams } from "Interfaces/courseInterface";
 
-type Props = {};
-
-const SearchPage = (props: Props) => {
+const SearchPage = () => {
   const [showAside, setShowAside] = useState(true);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { catalogId } = useParams();
@@ -43,31 +42,25 @@ const SearchPage = (props: Props) => {
     MaNhom: searchParams.get("MaNhom"),
   };
 
-  console.log(courseList.length);
-  console.log(courseListPaging);
-
   useEffect(() => {
-    console.log(catalogId);
     if (catalogId) dispatch(getCourseByCategory(catalogId));
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalogId]);
 
   useEffect(() => {
-    console.log(queryParams);
-    // if (Object.keys(queryParams).length !== 0) {
     dispatch(getCourseListPaging(queryParams));
-    // } else {
-    //   dispatch(getCourseListPaging());
-    // }
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryParams.page, queryParams.pageSize, queryParams.tenKhoaHoc]);
-
-  console.log(2);
 
   return (
     <Box sx={{ py: 5, mt: "5rem", bgcolor: "paper.main" }}>
       <Container>
-        <BreadcrumbNav secondLevel={catalogId} color="paper.contrastText" />
+        <BreadcrumbNav
+          secondLevel={courseList[0]?.danhMucKhoaHoc.tenDanhMucKhoaHoc}
+          color="paper.contrastText"
+        />
         {errorCourseListPaging && (
           <Alert severity="error">{errorCourseListPaging}</Alert>
         )}

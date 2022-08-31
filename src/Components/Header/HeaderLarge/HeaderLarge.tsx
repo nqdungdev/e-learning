@@ -86,10 +86,12 @@ const HeaderLarge = ({ onOpenConfirm }: Props) => {
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
+                      width: "5.5rem",
                       "&:hover": {
                         color: "secondary.main",
                       },
                     }}
+                    title={userLogin.hoTen}
                   >
                     {userLogin.hoTen}
                   </Typography>
