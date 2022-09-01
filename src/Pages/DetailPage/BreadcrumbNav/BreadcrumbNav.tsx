@@ -14,10 +14,13 @@ type Props = {
 const BreadcrumbNav = ({ secondLevel, thirdLevel, color }: Props) => {
   return (
     <Box role="presentation">
-      <Breadcrumbs sx={{ mb: 5 }} color={color || "primary.contrastText"}>
+      <Breadcrumbs
+        sx={{ mb: 5, fontWeight: 700 }}
+        color={color || "primary.contrastText"}
+      >
         <NavLink to={"/"}>
           <BreadcrumbText color={color}>
-            <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+            <HomeIcon sx={{ mr: 0.5 }} />
             Trang chủ
           </BreadcrumbText>
         </NavLink>
@@ -26,7 +29,7 @@ const BreadcrumbNav = ({ secondLevel, thirdLevel, color }: Props) => {
           thirdLevel ? (
             <NavLink to={"/search"}>
               <BreadcrumbText color={color}>
-                <CategoryIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                <CategoryIcon sx={{ mr: 0.5 }} />
                 {secondLevel}
               </BreadcrumbText>
             </NavLink>
@@ -35,7 +38,7 @@ const BreadcrumbNav = ({ secondLevel, thirdLevel, color }: Props) => {
               sx={{ display: "flex", alignItems: "center" }}
               color="secondary.main"
             >
-              <CategoryIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+              <CategoryIcon sx={{ mr: 0.5 }} />
               {secondLevel}
             </Typography>
           )
@@ -48,7 +51,7 @@ const BreadcrumbNav = ({ secondLevel, thirdLevel, color }: Props) => {
             sx={{ display: "flex", alignItems: "center" }}
             color="secondary.main"
           >
-            <AutoStoriesIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+            <AutoStoriesIcon sx={{ mr: 0.5 }} />
             {thirdLevel}
           </Typography>
         ) : (

@@ -1,58 +1,46 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "configStore";
-import {
-  createSearchParams,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
-import { getCourseByCategory, getCourseListPaging } from "Slices/courseSlice";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "configStore";
+import { createSearchParams, useSearchParams } from "react-router-dom";
 import {
   Box,
   Container,
   Grid,
-  Pagination,
   Stack,
-  Alert,
   Button,
+  FormControl,
+  InputLabel,
+  Select,
+  Typography,
+  SelectChangeEvent,
 } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
 import SearchAside from "./SearchAside/SearchAside";
 import BreadcrumbNav from "Pages/DetailPage/BreadcrumbNav/BreadcrumbNav";
-import { Course, SearchParams } from "Interfaces/courseInterface";
+import SearchContent from "./SearchContent/SearchContent";
+import SearchAlert from "./SearchAlert/SearchAlert";
+import { MenuItemText } from "_Playground/StyledComponents/HomePage/home.styled";
+import { decreaseSort, increaseSort } from "Slices/courseSlice";
 
 const SearchPage = () => {
+  const [sort, setSort] = useState("");
   const [showAside, setShowAside] = useState(true);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { catalogId } = useParams();
-
   const dispatch = useDispatch<AppDispatch>();
 
-  const { courseList, courseListPaging, errorCourseListPaging } = useSelector(
-    (state: RootState) => state.courseSlice
-  );
+  const { courseList } = useSelector((state: RootState) => state.courseSlice);
 
-  const queryParams: SearchParams = {
-    tenKhoaHoc: searchParams.get("tenKhoaHoc"),
-    page: parseInt(searchParams.get("page") as any),
-    pageSize: parseInt(searchParams.get("pageSize") as any),
-    MaNhom: searchParams.get("MaNhom"),
+  useEffect(() => {
+    document.title = "Tìm kiếm";
+  }, []);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setSort(event.target.value);
   };
 
-  useEffect(() => {
-    if (catalogId) dispatch(getCourseByCategory(catalogId));
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catalogId]);
-
-  useEffect(() => {
-    dispatch(getCourseListPaging(queryParams));
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryParams.page, queryParams.pageSize, queryParams.tenKhoaHoc]);
+  console.log(2);
 
   return (
     <Box sx={{ py: 5, mt: "5rem", bgcolor: "paper.main" }}>
@@ -61,10 +49,9 @@ const SearchPage = () => {
           secondLevel={courseList[0]?.danhMucKhoaHoc.tenDanhMucKhoaHoc}
           color="paper.contrastText"
         />
-        {errorCourseListPaging && (
-          <Alert severity="error">{errorCourseListPaging}</Alert>
-        )}
-        <Stack alignItems="flex-start">
+        <SearchAlert />
+
+        <Stack justifyContent="flex-start" direction="row" pt={5}>
           <Button
             onClick={() => {
               setShowAside((showAside) => (showAside = !showAside));
@@ -80,11 +67,52 @@ const SearchPage = () => {
           >
             <FilterListIcon />
           </Button>
+
+          <FormControl
+            sx={{
+              mx: 1,
+              display: { xs: "inline-flex", md: "none" },
+              visibility: showAside ? "visible" : "hidden",
+              width: showAside ? "180px" : 0,
+              transition: "all 0.4s",
+            }}
+            size="small"
+            color="secondary"
+          >
+            <InputLabel id="category-select">Sắp xếp</InputLabel>
+            <Select
+              labelId="category-select"
+              id="category-select"
+              value={sort}
+              label="Category"
+              onChange={handleChange}
+              sx={{
+                bgcolor: "paper.main",
+                borderColor: "secondary.main",
+                color: "paper.contrastText",
+              }}
+            >
+              <MenuItemText
+                value="increase"
+                onClick={() => dispatch(increaseSort())}
+              >
+                <Typography ml={1}>A-&gt;Z</Typography>
+              </MenuItemText>
+              <MenuItemText
+                value="decrease"
+                onClick={() => dispatch(decreaseSort())}
+              >
+                <Typography ml={1}>Z-&gt;A</Typography>
+              </MenuItemText>
+            </Select>
+          </FormControl>
         </Stack>
+
         <Grid container>
           <Grid
             item
-            xs={showAside ? 3 : 0}
+            xs={showAside ? 4 : 0}
+            md={showAside ? 3 : 0}
             sx={{ visibility: showAside ? "visible" : "hidden" }}
           >
             <Box
@@ -100,124 +128,11 @@ const SearchPage = () => {
 
           <Grid
             item
-            xs={showAside ? 9 : 12}
+            xs={showAside ? 8 : 12}
+            md={showAside ? 9 : 12}
             sx={{ transition: showAside ? "all 0s" : "all 0.4s 0.4s" }}
           >
-            <Grid container>
-              {catalogId
-                ? queryParams.page === 1
-                  ? showAside
-                    ? courseList.slice(0, 6).map((course: Course) => {
-                        return (
-                          <Grid
-                            item
-                            xs={showAside ? 4 : 3}
-                            sx={{
-                              transition: "all 0.4s",
-                            }}
-                            key={course.maKhoaHoc}
-                          >
-                            <CourseItem course={course} />
-                          </Grid>
-                        );
-                      })
-                    : courseList.slice(0, 8).map((course: Course) => {
-                        return (
-                          <Grid
-                            item
-                            xs={showAside ? 4 : 3}
-                            sx={{
-                              transition: "all 0.4s",
-                            }}
-                            key={course.maKhoaHoc}
-                          >
-                            <CourseItem course={course} />
-                          </Grid>
-                        );
-                      })
-                  : showAside
-                  ? courseList.slice(6).map((course: Course) => {
-                      return (
-                        <Grid
-                          item
-                          xs={showAside ? 4 : 3}
-                          sx={{
-                            transition: "all 0.4s",
-                          }}
-                          key={course.maKhoaHoc}
-                        >
-                          <CourseItem course={course} />
-                        </Grid>
-                      );
-                    })
-                  : courseList.slice(8).map((course: Course) => {
-                      return (
-                        <Grid
-                          item
-                          xs={showAside ? 4 : 3}
-                          sx={{
-                            transition: "all 0.4s",
-                          }}
-                          key={course.maKhoaHoc}
-                        >
-                          <CourseItem course={course} />
-                        </Grid>
-                      );
-                    })
-                : courseListPaging?.items?.map((course: Course) => {
-                    return (
-                      <Grid
-                        item
-                        xs={showAside ? 4 : 3}
-                        sx={{
-                          transition: "all 0.4s",
-                        }}
-                        key={course.maKhoaHoc}
-                      >
-                        <CourseItem course={course} />
-                      </Grid>
-                    );
-                  })}
-
-              {courseListPaging && (
-                <Grid item xs={12} pt={3}>
-                  <Stack direction="row" justifyContent="center">
-                    <Pagination
-                      count={
-                        showAside
-                          ? courseList.length !== 0
-                            ? courseList.length > 6
-                              ? Math.floor(courseList.length / 7) + 1
-                              : 1
-                            : courseListPaging.totalPages
-                          : courseList
-                          ? courseList.length > 8
-                            ? Math.floor(courseList.length / 9) + 1
-                            : 1
-                          : courseListPaging.totalPages
-                      }
-                      color="secondary"
-                      showFirstButton
-                      showLastButton
-                      page={queryParams.page || 1}
-                      onChange={(
-                        event: ChangeEvent<unknown>,
-                        value: number
-                      ) => {
-                        setSearchParams(
-                          createSearchParams({
-                            tenKhoaHoc: searchParams?.get("tenKhoaHoc") || "",
-                            page: `${value}`,
-                            pageSize: showAside ? "6" : "8",
-                            MaNhom: "GP01",
-                          })
-                        );
-                      }}
-                    />
-                  </Stack>
-                </Grid>
-              )}
-            </Grid>
+            <SearchContent showAside={showAside} />
           </Grid>
         </Grid>
       </Container>

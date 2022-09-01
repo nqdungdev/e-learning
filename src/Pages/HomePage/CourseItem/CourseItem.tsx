@@ -1,3 +1,4 @@
+import { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -16,6 +17,7 @@ import {
   CardTitle,
   CardText,
 } from "_Playground/StyledComponents/HomePage/home.styled";
+import Placeholder200x150 from "Assets/img/Placeholder/200x150.jpg";
 
 type Props = {
   course: Course;
@@ -38,6 +40,9 @@ const CourseItem = ({ course }: Props) => {
             component="img"
             height="160"
             image={course.hinhAnh}
+            onError={(error: SyntheticEvent<HTMLImageElement, Event>) =>
+              (error.currentTarget.src = Placeholder200x150)
+            }
             alt={course.hinhAnh}
           />
           <CardContent>

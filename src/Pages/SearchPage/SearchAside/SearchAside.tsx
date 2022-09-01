@@ -23,8 +23,14 @@ const SearchAside = () => {
     (state: RootState) => state.courseSlice
   );
 
+  console.log(1);
+
   return (
-    <Box>
+    <Box
+      sx={{
+        display: { xs: "none", md: "block" },
+      }}
+    >
       <Divider />
       <MenuItemText
         sx={{
@@ -38,10 +44,13 @@ const SearchAside = () => {
       >
         <Stack direction="row">
           <CategoryIcon />
-          <Typography ml={2}>Danh mục</Typography>
+          <Typography sx={{ fontWeight: 700 }} ml={2}>
+            Danh mục
+          </Typography>
         </Stack>
         {showCategory ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </MenuItemText>
+
       <Box
         sx={{
           overflow: "hidden",
@@ -83,7 +92,9 @@ const SearchAside = () => {
       >
         <Stack direction="row">
           <SortByAlphaIcon />
-          <Typography ml={2}>Sắp xếp</Typography>
+          <Typography sx={{ fontWeight: 700 }} ml={2}>
+            Sắp xếp
+          </Typography>
         </Stack>
         {showSort ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </MenuItemText>

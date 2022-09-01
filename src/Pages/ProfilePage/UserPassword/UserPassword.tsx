@@ -45,9 +45,11 @@ const UserPassword = () => {
     dispatch(putUpdateUser({ ...userInfo!, matKhau: values.newPassword }));
     setOpenSuccess(true);
   };
+
   const onError = (error: FieldErrors<RegisterValues>) => {
     console.log(error);
   };
+
   return (
     <Box>
       <SweetAlert

@@ -16,15 +16,21 @@ const ProfilePage = () => {
   const { isUserInfoLoading } = useSelector(
     (state: RootState) => state.userSlice
   );
+
   useEffect(() => {
     dispatch(postUserInfo());
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    document.title = "Thông tin tài khoản";
+  }, []);
+
   const handleSelect = (values: number) => {
     setSelected(values);
   };
+
   if (isUserInfoLoading) {
     return <LoadingAPI />;
   }

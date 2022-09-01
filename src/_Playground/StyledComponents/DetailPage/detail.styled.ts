@@ -5,7 +5,9 @@ import { Typography } from "@mui/material";
 // Breadcrumb
 export const BreadcrumbText = styled(Typography)<{ color?: string }>`
   color: ${({ color }) => (color ? color : theme.palette.primary.contrastText)};
-  font-weight: 500;
+  font-weight: 700 !important;
+  align-items: center;
+  display: flex;
   &:hover {
     color: ${theme.palette.secondary.main};
   }

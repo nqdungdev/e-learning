@@ -27,7 +27,6 @@ const RegisteredCourse = () => {
   const chiTietKhoaHocGhiDanh: RegisteredCourseDetail[] | undefined =
     userInfo?.chiTietKhoaHocGhiDanh;
 
-  console.log(userInfo);
   return (
     <Box>
       <Title style={{ textAlign: "center" }}>Khóa học đã đăng ký</Title>

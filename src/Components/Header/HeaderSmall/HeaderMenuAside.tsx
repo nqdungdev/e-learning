@@ -64,24 +64,26 @@ const HeaderMenuAside = ({ showMenuAside, onOpenConfirm }: Props) => {
             width="100%"
           >
             <NavLink to={"/profile"}>
-              <IconButton sx={{ p: 0, height: "max-content" }}>
-                <Avatar
-                  alt="https://i.pravatar.cc"
-                  src="https://i.pravatar.cc"
-                />
-              </IconButton>
+              <Stack alignItems="center">
+                <IconButton sx={{ p: 0, height: "max-content" }}>
+                  <Avatar
+                    alt="https://i.pravatar.cc"
+                    src="https://i.pravatar.cc"
+                  />
+                </IconButton>
 
-              <Typography
-                sx={{
-                  mt: 2,
-                  color: "secondary.contrastText",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {userLogin?.hoTen}
-              </Typography>
+                <Typography
+                  sx={{
+                    mt: 2,
+                    color: "secondary.contrastText",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {userLogin?.hoTen}
+                </Typography>
+              </Stack>
             </NavLink>
           </Stack>
         </MenuItem>

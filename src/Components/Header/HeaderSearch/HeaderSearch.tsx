@@ -8,7 +8,7 @@ type Props = { showSearchField?: boolean };
 const HeaderSearch = ({ showSearchField }: Props) => {
   const navigate = useNavigate();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -20,9 +20,9 @@ const HeaderSearch = ({ showSearchField }: Props) => {
   const onSuccess = (values: any) => {
     navigate({
       pathname: "/search",
-      search: `?tenKhoaHoc=${values.searchText}&page=${
-        searchParams.get("page") || 1
-      }&pageSize=${searchParams.get("pageSize") || 6}&MaNhom=GP01`,
+      search: `?tenKhoaHoc=${values.searchText}&page=1&pageSize=${
+        searchParams.get("pageSize") || 6
+      }&MaNhom=GP01`,
     });
   };
 
