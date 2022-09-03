@@ -1,23 +1,16 @@
-import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import Loading from "Assets/img/Loading/loading.gif";
 
-type Props = {};
-const StyledBox = styled(Box)`
-  position: fixed;
-  background-position: center;
-  background-size: cover;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
-
-const LoadingLazy = (props: Props) => {
+const LoadingLazy = () => {
   return (
-    <StyledBox
+    <Box
       sx={{
-        backgroundImage: `url(${Loading})`,
+        background: `url(${Loading}) center center / cover no-repeat`,
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
       }}
     />
   );

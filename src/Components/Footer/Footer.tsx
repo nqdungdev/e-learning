@@ -6,6 +6,7 @@ import {
   TitleFooter,
 } from "_Playground/StyledComponents/HomePage/home.styled";
 import Logo from "Components/Logo/Logo";
+import { animateScroll } from "react-scroll";
 
 const Footer = () => {
   return (
@@ -80,7 +81,7 @@ const Footer = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Box>
+          <Box onClick={() => animateScroll.scrollToTop({ duration: "0" })}>
             <Logo />
           </Box>
           <TextFooter>© 2022 E-learning, Inc</TextFooter>

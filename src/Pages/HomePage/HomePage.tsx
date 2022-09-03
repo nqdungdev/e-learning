@@ -7,6 +7,7 @@ const HomePage = () => {
   useEffect(() => {
     document.title = "Trang chủ";
   }, []);
+
   return (
     <Fragment>
       <Banner />

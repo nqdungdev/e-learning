@@ -6,7 +6,7 @@ const Logo = () => {
   return (
     <Stack alignItems="center" justifyContent="center">
       <NavLink to={"/"}>
-        <img src={LogoElearning} alt={LogoElearning} width="100rem" />
+        <img src={LogoElearning} alt={LogoElearning} width="80rem" />
       </NavLink>
     </Stack>
   );

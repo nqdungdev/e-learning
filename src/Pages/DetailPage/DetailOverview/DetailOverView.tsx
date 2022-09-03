@@ -6,6 +6,7 @@ import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
 
 const DetailOverView = () => {
   const { course } = useSelector((state: RootState) => state.courseSlice);
+
   return (
     <Box id="description" bgcolor="paper.main" py={5}>
       <Container>

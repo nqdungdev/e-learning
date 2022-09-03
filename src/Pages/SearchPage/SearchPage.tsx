@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "configStore";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Container,
   Grid,
   Stack,
-  Button,
   FormControl,
   InputLabel,
   Select,
@@ -24,23 +23,27 @@ import { decreaseSort, increaseSort } from "Slices/courseSlice";
 
 const SearchPage = () => {
   const [sort, setSort] = useState("");
-  const [showAside, setShowAside] = useState(true);
+  const [category, setCategory] = useState("");
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const { courseList } = useSelector((state: RootState) => state.courseSlice);
+  const { courseList, courseCatalog } = useSelector(
+    (state: RootState) => state.courseSlice
+  );
 
   useEffect(() => {
     document.title = "Tìm kiếm";
   }, []);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChangeSort = useCallback((event: SelectChangeEvent) => {
     setSort(event.target.value);
-  };
+  }, []);
 
-  console.log(2);
+  const handleChange = useCallback((event: SelectChangeEvent) => {
+    setCategory(event.target.value);
+  }, []);
 
   return (
     <Box sx={{ py: 5, mt: "5rem", bgcolor: "paper.main" }}>
@@ -51,30 +54,54 @@ const SearchPage = () => {
         />
         <SearchAlert />
 
-        <Stack justifyContent="flex-start" direction="row" pt={5}>
-          <Button
-            onClick={() => {
-              setShowAside((showAside) => (showAside = !showAside));
-              setSearchParams(
-                createSearchParams({
-                  tenKhoaHoc: searchParams?.get("tenKhoaHoc") || "",
-                  page: searchParams?.get("page") || "1",
-                  pageSize: !showAside ? "6" : "8",
-                  MaNhom: "GP01",
-                })
-              );
-            }}
-          >
-            <FilterListIcon />
-          </Button>
+        <Stack
+          justifyContent="flex-start"
+          alignItems="center"
+          direction="row"
+          sx={{ mb: 1 }}
+        >
+          <FilterListIcon />
 
           <FormControl
+            sx={{ mx: 3, width: "180px" }}
+            size="small"
+            color="secondary"
+          >
+            <InputLabel id="category-select">Danh mục</InputLabel>
+            <Select
+              labelId="category-select"
+              id="category-select"
+              value={category}
+              label="Category"
+              onChange={handleChange}
+              sx={{
+                bgcolor: "paper.main",
+                borderColor: "secondary.main",
+                color: "paper.contrastText",
+              }}
+            >
+              {courseCatalog.map((category) => {
+                return (
+                  <MenuItemText
+                    key={category.maDanhMuc}
+                    value={category.maDanhMuc}
+                    onClick={() =>
+                      navigate({
+                        pathname: `/search/${category.maDanhMuc}`,
+                        search: `?page=1&pageSize=6&MaNhom=GP01`,
+                      })
+                    }
+                  >
+                    {category.tenDanhMuc}
+                  </MenuItemText>
+                );
+              })}
+            </Select>
+          </FormControl>
+          <FormControl
             sx={{
-              mx: 1,
+              width: "180px",
               display: { xs: "inline-flex", md: "none" },
-              visibility: showAside ? "visible" : "hidden",
-              width: showAside ? "180px" : 0,
-              transition: "all 0.4s",
             }}
             size="small"
             color="secondary"
@@ -85,7 +112,7 @@ const SearchPage = () => {
               id="category-select"
               value={sort}
               label="Category"
-              onChange={handleChange}
+              onChange={handleChangeSort}
               sx={{
                 bgcolor: "paper.main",
                 borderColor: "secondary.main",
@@ -111,28 +138,22 @@ const SearchPage = () => {
         <Grid container>
           <Grid
             item
-            xs={showAside ? 4 : 0}
-            md={showAside ? 3 : 0}
-            sx={{ visibility: showAside ? "visible" : "hidden" }}
+            xs={0}
+            md={3}
+            sx={{ display: { xs: "none", md: "block" } }}
           >
             <Box
               sx={{
-                width: showAside ? "100%" : 0,
+                width: "100%",
                 overflow: "hidden",
-                transition: "all 0.4s",
               }}
             >
               <SearchAside />
             </Box>
           </Grid>
 
-          <Grid
-            item
-            xs={showAside ? 8 : 12}
-            md={showAside ? 9 : 12}
-            sx={{ transition: showAside ? "all 0s" : "all 0.4s 0.4s" }}
-          >
-            <SearchContent showAside={showAside} />
+          <Grid item xs={12} md={9}>
+            <SearchContent />
           </Grid>
         </Grid>
       </Container>

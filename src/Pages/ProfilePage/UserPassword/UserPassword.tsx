@@ -40,7 +40,6 @@ const UserPassword = () => {
   });
 
   const onSubmit = (values: UpdatePassword) => {
-    console.log({ ...userInfo, matKhau: values.newPassword });
     setOpenConfirm(false);
     dispatch(putUpdateUser({ ...userInfo!, matKhau: values.newPassword }));
     setOpenSuccess(true);

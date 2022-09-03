@@ -21,7 +21,7 @@ const courseAPI = {
   },
 
   getCourseByCategory: (
-    maDanhMuc: string = "TuDuy",
+    maDanhMuc: string = "Backend",
     maNhom: string = "GP01"
   ) => {
     return axiosClient.get<Course[]>(

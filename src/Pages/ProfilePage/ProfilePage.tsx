@@ -8,12 +8,13 @@ import LoadingAPI from "Components/LoadingAPI/LoadingAPI";
 import UserCatalog from "./UserCatalog/UserCatalog";
 import UserPassword from "./UserPassword/UserPassword";
 import RegisteredCourse from "./RegisteredCourse/RegisteredCourse";
+import ErrorBoundary from "Components/ErrorBoundary/ErrorBoundary";
 
 const ProfilePage = () => {
   const [selected, setSelected] = useState<number>(1);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { isUserInfoLoading } = useSelector(
+  const { isUserInfoLoading, errorUserInfo } = useSelector(
     (state: RootState) => state.userSlice
   );
 
@@ -33,6 +34,10 @@ const ProfilePage = () => {
 
   if (isUserInfoLoading) {
     return <LoadingAPI />;
+  }
+
+  if (errorUserInfo) {
+    return <ErrorBoundary />;
   }
 
   return (

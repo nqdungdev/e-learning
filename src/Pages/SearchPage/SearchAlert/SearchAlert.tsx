@@ -14,12 +14,13 @@ const SearchAlert = () => {
   const { catalogId } = useParams();
 
   return (
-    <Box>
+    <Box sx={{ mb: 3 }}>
       {!catalogId ? (
         errorCourseListPaging ? (
           <Alert severity="error">{errorCourseListPaging}</Alert>
         ) : (
           courseListPaging &&
+          searchParams.get("tenKhoaHoc") &&
           searchParams.get("tenKhoaHoc") !== "" && (
             <CardTitle>
               {courseListPaging.totalCount} kết quả tìm kiếm cho từ khóa "

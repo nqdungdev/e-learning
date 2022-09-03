@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "configStore";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,11 @@ import HeaderLarge from "./HeaderLarge/HeaderLarge";
 const Header = () => {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
+  const [screenWidth, setSreenWidth] = useState<number>(window.innerWidth);
+
+  window.onresize = function (event) {
+    setSreenWidth(window.innerWidth);
+  };
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -45,7 +50,6 @@ const Header = () => {
           setOpenConfirm(false);
         }}
       />
-
       <SweetAlert
         show={openSuccess}
         icon="success"
@@ -60,11 +64,10 @@ const Header = () => {
           navigate("/");
         }}
       />
-
-      <HeaderLarge onOpenConfirm={handleOpenConfirm} />
-      <HeaderSmall onOpenConfirm={handleOpenConfirm} />
+      {screenWidth >= 900 && <HeaderLarge onOpenConfirm={handleOpenConfirm} />}
+      {screenWidth < 900 && <HeaderSmall onOpenConfirm={handleOpenConfirm} />}
     </AppBar>
   );
 };
 
-export default Header;
+export default memo(Header);

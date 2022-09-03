@@ -1,6 +1,6 @@
 import { Container } from "@mui/system";
 import { Component, ErrorInfo, ReactNode } from "react";
-import maintenance from "Assets/img/Error/maintenance.jpg";
+import maintenance from "Assets/img/Error/maintenance.gif";
 interface Props {
   children?: ReactNode;
 }

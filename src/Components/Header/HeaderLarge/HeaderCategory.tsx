@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "configStore";
 import {
@@ -28,9 +28,9 @@ const HeaderCategory = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChange = useCallback((event: SelectChangeEvent) => {
     setCategory(event.target.value);
-  };
+  }, []);
 
   return (
     <FormControl sx={{ mx: 3, width: "180px" }} size="small" color="secondary">

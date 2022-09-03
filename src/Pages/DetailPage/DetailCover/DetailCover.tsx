@@ -31,7 +31,7 @@ const DetailCover = () => {
 
   const { userLogin } = useSelector((state: RootState) => state.authSlice);
 
-  const handleConfirm = (courseId: string) => {
+  const handleConfirm = () => {
     if (!userLogin) {
       setOpenWarning(true);
       return;
@@ -48,7 +48,6 @@ const DetailCover = () => {
         })
       )
         .then((res: any) => {
-          console.log(res);
           if (res?.error?.message) setOpenError(true);
           else {
             setOpenSuccess(true);
@@ -56,6 +55,7 @@ const DetailCover = () => {
         })
         .catch((err: any) => console.log(err));
   };
+
   return (
     <Box
       sx={{
@@ -201,7 +201,7 @@ const DetailCover = () => {
                   color: "secondary.contrastText",
                 }}
                 onClick={() => {
-                  handleConfirm(course!.maKhoaHoc);
+                  handleConfirm();
                 }}
               >
                 Đăng ký

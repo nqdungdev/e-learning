@@ -1,29 +1,30 @@
 import { Tabs, Tab, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState, SyntheticEvent } from "react";
 import { AppDispatch, RootState } from "configStore";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourseByCategory, getCourseCatalog } from "Slices/courseSlice";
+import { getCourseByCategory } from "Slices/courseSlice";
 
 const TabLabel = () => {
   const [value, setValue] = useState("BackEnd");
+
   const dispatch = useDispatch<AppDispatch>();
-  useEffect(() => {
-    dispatch(getCourseCatalog());
-    return () => {};
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getCourseByCategory(value));
     return () => {};
-  }, [value, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const { courseCatalog } = useSelector(
     (state: RootState) => state.courseSlice
   );
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
+  const handleChange = useCallback(
+    (event: SyntheticEvent, newValue: string) => {
+      setValue(newValue);
+    },
+    []
+  );
 
   return (
     <Stack alignItems="center" width="100%">
@@ -50,4 +51,4 @@ const TabLabel = () => {
   );
 };
 
-export default TabLabel;
+export default memo(TabLabel);

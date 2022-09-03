@@ -7,11 +7,16 @@ import { getCourseByCategory } from "Slices/courseSlice";
 import { Box, Container } from "@mui/material";
 import CourseItem from "Pages/HomePage/CourseItem/CourseItem";
 import { Title } from "_Playground/StyledComponents/HomePage/home.styled";
+import LoadingAPI from "Components/LoadingAPI/LoadingAPI";
+import ErrorAPI from "Components/ErrorAPI/ErrorAPI";
 
 const DetailRelated = () => {
-  const { course, courseList } = useSelector(
-    (state: RootState) => state.courseSlice
-  );
+  const {
+    course,
+    courseByCatalog,
+    isCourseByCatalogLoading,
+    errorCourseByCatalog,
+  } = useSelector((state: RootState) => state.courseSlice);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,7 +33,9 @@ const DetailRelated = () => {
     speed: 1000,
     autoplay: true,
     slidesToShow:
-      courseList.length > 0 && courseList.length <= 4 ? courseList.length : 4,
+      courseByCatalog.length > 0 && courseByCatalog.length <= 4
+        ? courseByCatalog.length
+        : 4,
     slidesToScroll: 2,
     rows: 1,
     responsive: [
@@ -36,8 +43,8 @@ const DetailRelated = () => {
         breakpoint: 992,
         settings: {
           slidesToShow:
-            courseList.length > 0 && courseList.length <= 4
-              ? courseList.length
+            courseByCatalog.length > 0 && courseByCatalog.length <= 4
+              ? courseByCatalog.length
               : 3,
         },
       },
@@ -45,8 +52,8 @@ const DetailRelated = () => {
         breakpoint: 768,
         settings: {
           slidesToShow:
-            courseList.length > 0 && courseList.length <= 4
-              ? courseList.length
+            courseByCatalog.length > 0 && courseByCatalog.length <= 4
+              ? courseByCatalog.length
               : 2,
         },
       },
@@ -54,8 +61,8 @@ const DetailRelated = () => {
         breakpoint: 576,
         settings: {
           slidesToShow:
-            courseList.length > 0 && courseList.length <= 4
-              ? courseList.length
+            courseByCatalog.length > 0 && courseByCatalog.length <= 4
+              ? courseByCatalog.length
               : 1,
           slidesToScroll: 1,
           rows: 3,
@@ -63,12 +70,21 @@ const DetailRelated = () => {
       },
     ],
   };
+
+  if (isCourseByCatalogLoading) {
+    return <LoadingAPI />;
+  }
+
+  if (errorCourseByCatalog) {
+    return <ErrorAPI />;
+  }
+
   return (
     <Box sx={{ py: 5, bgcolor: "paper.main" }}>
       <Container>
         <Title>Khóa học liên quan</Title>
         <Slider {...settings}>
-          {courseList?.map((course) => {
+          {courseByCatalog?.map((course) => {
             return <CourseItem key={course.maKhoaHoc} course={course} />;
           })}
         </Slider>

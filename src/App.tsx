@@ -38,7 +38,7 @@ function App() {
                   }
                 />
               </Route>
-              <Route path="/" element={<LoginTemplate />}>
+              <Route path="" element={<LoginTemplate />}>
                 <Route
                   path="login"
                   element={

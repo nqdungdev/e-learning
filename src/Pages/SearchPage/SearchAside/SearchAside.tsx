@@ -23,8 +23,6 @@ const SearchAside = () => {
     (state: RootState) => state.courseSlice
   );
 
-  console.log(1);
-
   return (
     <Box
       sx={{

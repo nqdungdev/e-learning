@@ -12,15 +12,23 @@ interface State {
   courseCatalog: CourseCatalog[];
   isCourseCatalogLoading: boolean;
   errorCourseCatalog: string | null;
+
   courseList: Course[];
   isCourseListLoading: boolean;
   errorCourseList: string | null;
+
+  courseByCatalog: Course[];
+  isCourseByCatalogLoading: boolean;
+  errorCourseByCatalog: string | null;
+
   courseListPaging: CoursePagination | null;
   isCourseListPagingLoading: boolean;
   errorCourseListPaging: string | null;
+
   course: Course | null;
   isCourseLoading: boolean;
   errorCourse: string | null;
+
   registerCourse: Course | null;
   isRegisterCourseLoading: boolean;
   errorRegisterCourse: string | null;
@@ -30,15 +38,23 @@ const initialState: State = {
   courseCatalog: [],
   isCourseCatalogLoading: false,
   errorCourseCatalog: null,
+
   courseList: [],
   isCourseListLoading: false,
   errorCourseList: null,
+
+  courseByCatalog: [],
+  isCourseByCatalogLoading: false,
+  errorCourseByCatalog: null,
+
   courseListPaging: null,
   isCourseListPagingLoading: false,
   errorCourseListPaging: null,
+
   course: null,
   isCourseLoading: false,
   errorCourse: null,
+
   registerCourse: null,
   isRegisterCourseLoading: false,
   errorRegisterCourse: null,
@@ -145,12 +161,12 @@ const courseSlice = createSlice({
   initialState,
   reducers: {
     increaseSort: (state) => {
-      state.courseList.sort(getComparator("asc", "tenKhoaHoc"));
+      state.courseByCatalog.sort(getComparator("asc", "tenKhoaHoc"));
       state.courseListPaging?.items.sort(getComparator("asc", "tenKhoaHoc"));
     },
 
     decreaseSort: (state) => {
-      state.courseList.sort(getComparator("desc", "tenKhoaHoc"));
+      state.courseByCatalog.sort(getComparator("desc", "tenKhoaHoc"));
       state.courseListPaging?.items.sort(getComparator("desc", "tenKhoaHoc"));
     },
   },
@@ -195,16 +211,16 @@ const courseSlice = createSlice({
     });
     //------------------------------------------------------------------
     builder.addCase(getCourseByCategory.pending, (state) => {
-      state.isCourseListLoading = true;
+      state.isCourseByCatalogLoading = true;
     });
     builder.addCase(getCourseByCategory.fulfilled, (state, { payload }) => {
-      state.errorCourseList = null;
-      state.isCourseListLoading = false;
-      state.courseList = payload;
+      state.errorCourseByCatalog = null;
+      state.isCourseByCatalogLoading = false;
+      state.courseByCatalog = payload;
     });
     builder.addCase(getCourseByCategory.rejected, (state, { error }) => {
-      state.isCourseListLoading = false;
-      state.errorCourseList = error.message as string;
+      state.isCourseByCatalogLoading = false;
+      state.errorCourseByCatalog = error.message as string;
     });
     //------------------------------------------------------------------
     builder.addCase(getCourseInfo.pending, (state) => {
