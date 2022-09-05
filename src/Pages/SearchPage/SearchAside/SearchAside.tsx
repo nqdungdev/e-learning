@@ -42,7 +42,7 @@ const SearchAside = () => {
       >
         <Stack direction="row">
           <CategoryIcon />
-          <Typography sx={{ fontWeight: 700 }} ml={2}>
+          <Typography sx={{ fontWeight: 700 }} ml={1}>
             Danh mục
           </Typography>
         </Stack>
@@ -62,6 +62,7 @@ const SearchAside = () => {
               key={category.maDanhMuc}
               value={category.maDanhMuc}
               sx={{
+                width: "100%",
                 py: 1,
               }}
               onClick={() =>
@@ -71,8 +72,10 @@ const SearchAside = () => {
                 })
               }
             >
-              <AddIcon sx={{ ml: 1 }} />
-              <Typography ml={1}> {category.tenDanhMuc}</Typography>
+              <AddIcon />
+              <Typography ml={1} title={category.tenDanhMuc}>
+                {category.tenDanhMuc}
+              </Typography>
             </MenuItemText>
           );
         })}
@@ -109,7 +112,7 @@ const SearchAside = () => {
           }}
           onClick={() => dispatch(increaseSort())}
         >
-          <AddIcon sx={{ ml: 1 }} />
+          <AddIcon />
           <Typography ml={1}>A-&gt;Z</Typography>
         </MenuItemText>
 
@@ -119,7 +122,7 @@ const SearchAside = () => {
           }}
           onClick={() => dispatch(decreaseSort())}
         >
-          <AddIcon sx={{ ml: 1 }} />
+          <AddIcon />
           <Typography ml={1}>Z-&gt;A</Typography>
         </MenuItemText>
       </Box>

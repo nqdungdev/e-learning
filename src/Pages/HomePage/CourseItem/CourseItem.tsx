@@ -14,8 +14,8 @@ import {
 } from "@mui/material";
 import { Course } from "Interfaces/courseInterface";
 import {
-  CardTitle,
-  CardText,
+  FeatureTitle,
+  FeatureText,
 } from "_Playground/StyledComponents/HomePage/home.styled";
 import Placeholder200x150 from "Assets/img/Placeholder/200x150.jpg";
 
@@ -33,8 +33,8 @@ const CourseItem = ({ course }: Props) => {
   const star: number = randomStar();
 
   return (
-    <Box sx={{ px: 1, mb: 2 }}>
-      <Card sx={{ maxWidth: 250 }}>
+    <Box sx={{ mb: 2, mx: "auto", width: "100%", p: 1 }}>
+      <Card sx={{ maxWidth: 240, width: "100%" }}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -46,8 +46,10 @@ const CourseItem = ({ course }: Props) => {
             alt={course.hinhAnh}
           />
           <CardContent>
-            <CardTitle title={course.tenKhoaHoc}>{course.tenKhoaHoc}</CardTitle>
-            <CardText>{course.nguoiTao.hoTen}</CardText>
+            <FeatureTitle title={course.tenKhoaHoc}>
+              {course.tenKhoaHoc}
+            </FeatureTitle>
+            <FeatureText>{course.nguoiTao.hoTen}</FeatureText>
             <Stack direction="row" alignItems="center">
               <Typography color="secondary.main" sx={{ fontWeight: 700 }}>
                 {star}
@@ -59,9 +61,12 @@ const CourseItem = ({ course }: Props) => {
                 size="small"
                 readOnly
               />
-              <CardText title="Số lượng học viên" style={{ marginLeft: "5px" }}>
+              <FeatureText
+                title="Số lượng học viên"
+                style={{ marginLeft: "5px" }}
+              >
                 ({course.soLuongHocVien})
-              </CardText>
+              </FeatureText>
             </Stack>
           </CardContent>
         </CardActionArea>

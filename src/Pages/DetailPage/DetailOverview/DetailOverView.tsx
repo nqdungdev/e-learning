@@ -10,7 +10,7 @@ const DetailOverView = () => {
   return (
     <Box id="description" bgcolor="paper.main" py={5}>
       <Container>
-        <Title style={{ textAlign: "center" }}>Giới thiệu khóa học</Title>
+        <Title style={{ textAlign: "center" }}>Thông tin khóa học</Title>
         <DetailText>{course?.moTa}</DetailText>
       </Container>
     </Box>

@@ -58,7 +58,7 @@ const SearchContent = () => {
   }
 
   return (
-    <Grid container>
+    <Grid container spacing={1}>
       {!catalogId
         ? courseListPaging?.items.map((course: Course) => {
             return (
@@ -66,6 +66,7 @@ const SearchContent = () => {
                 item
                 xs={6}
                 sm={4}
+                md={4}
                 sx={{
                   transition: "all 0.4s",
                 }}
@@ -86,6 +87,7 @@ const SearchContent = () => {
                   item
                   xs={6}
                   sm={4}
+                  md={4}
                   sx={{
                     transition: "all 0.4s",
                   }}

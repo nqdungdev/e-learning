@@ -1,5 +1,5 @@
 import { theme } from "GlobalStyles";
-import { useState } from "react";
+import { useState, SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "configStore";
 import { Box, Button, Container, Grid, Link, Stack } from "@mui/material";
@@ -14,6 +14,7 @@ import {
 import SweetAlert from "react-sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { postRegisterCourse } from "Slices/courseSlice";
+import Placeholder200x150 from "Assets/img/Placeholder/200x150.jpg";
 
 const DetailCover = () => {
   const [openWarning, setOpenWarning] = useState(false);
@@ -191,7 +192,14 @@ const DetailCover = () => {
               flexDirection: "column",
             }}
           >
-            <img src={course?.hinhAnh} alt={course?.hinhAnh} width="100%" />
+            <img
+              src={course?.hinhAnh}
+              alt={course?.hinhAnh}
+              onError={(error: SyntheticEvent<HTMLImageElement, Event>) =>
+                (error.currentTarget.src = Placeholder200x150)
+              }
+              width="100%"
+            />
             <Stack mt={2} alignItems="center">
               <Button
                 variant="contained"

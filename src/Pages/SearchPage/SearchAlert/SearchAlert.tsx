@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "configStore";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Alert, Box } from "@mui/material";
-import { CardTitle } from "_Playground/StyledComponents/HomePage/home.styled";
+import { FeatureTitle } from "_Playground/StyledComponents/HomePage/home.styled";
 
 const SearchAlert = () => {
   const [searchParams] = useSearchParams();
@@ -22,10 +22,10 @@ const SearchAlert = () => {
           courseListPaging &&
           searchParams.get("tenKhoaHoc") &&
           searchParams.get("tenKhoaHoc") !== "" && (
-            <CardTitle>
+            <FeatureTitle>
               {courseListPaging.totalCount} kết quả tìm kiếm cho từ khóa "
               {searchParams.get("tenKhoaHoc")}"
-            </CardTitle>
+            </FeatureTitle>
           )
         )
       ) : (

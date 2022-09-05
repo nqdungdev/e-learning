@@ -6,6 +6,7 @@ import { getCourseInfo } from "Slices/courseSlice";
 import DetailCover from "./DetailCover/DetailCover";
 import DetailOverView from "./DetailOverview/DetailOverView";
 import DetailRelated from "./DetailRelated/DetailRelated";
+import DetailFeatures from "./DetailFeatures/DetailFeatures";
 
 const DetailPage = () => {
   const { courseId } = useParams();
@@ -26,6 +27,7 @@ const DetailPage = () => {
     <Fragment>
       <DetailCover />
       <DetailOverView />
+      <DetailFeatures />
       <DetailRelated />
     </Fragment>
   );

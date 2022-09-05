@@ -1,7 +1,7 @@
 import { Stack, Box, Button } from "@mui/material";
 import { RootState } from "configStore";
 import { useSelector } from "react-redux";
-import { CardTitle } from "_Playground/StyledComponents/HomePage/home.styled";
+import { FeatureTitle } from "_Playground/StyledComponents/HomePage/home.styled";
 
 type Props = {
   onSelect: (values: number) => void;
@@ -23,7 +23,7 @@ const UserCatalog = ({ onSelect }: Props) => {
           width="100%"
         />
       </Box>
-      <CardTitle>{userInfo?.hoTen}</CardTitle>
+      <FeatureTitle>{userInfo?.hoTen}</FeatureTitle>
       <Button
         variant="contained"
         color="secondary"

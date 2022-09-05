@@ -14,20 +14,15 @@ import ScienceIcon from "@mui/icons-material/Science";
 import GroupsIcon from "@mui/icons-material/Groups";
 import BiotechIcon from "@mui/icons-material/Biotech";
 import {
-  CardText,
-  CardTitle,
+  FeatureText,
+  FeatureTitle,
   Title,
 } from "_Playground/StyledComponents/HomePage/home.styled";
 import { theme } from "GlobalStyles";
+import { featuresData } from "Interfaces/courseInterface";
 
-interface cardData {
-  id: number;
-  title: string;
-  desc: string;
-  icon: JSX.Element;
-}
 const Features = () => {
-  const data: cardData[] = [
+  const data: featuresData[] = [
     {
       id: 1,
       title: "Học có lộ trình, định hướng cụ thể",
@@ -71,15 +66,16 @@ const Features = () => {
       <Container>
         <Title>Đặc điểm nổi bật</Title>
         <Grid container>
-          {data.map((card) => (
-            <Grid key={card.id} item xs={12} sm={6} md={4} p={1}>
+          {data.map((feature) => (
+            <Grid key={feature.id} item xs={12} sm={6} md={4} p={1}>
               <Card
                 sx={{
                   height: "100%",
-                  bgcolor: card.id % 2 === 0 ? "secondary.main" : "paper.light",
+                  bgcolor:
+                    feature.id % 2 === 0 ? "secondary.main" : "paper.light",
                   border: "1px solid",
                   borderColor:
-                    card.id % 2 === 0 ? "primary.dark" : "secondary.main",
+                    feature.id % 2 === 0 ? "primary.dark" : "secondary.main",
                 }}
               >
                 <CardActionArea
@@ -96,32 +92,32 @@ const Features = () => {
                     <Icon
                       sx={{
                         color:
-                          card.id % 2 === 0
+                          feature.id % 2 === 0
                             ? "secondary.contrastText"
                             : "paper.contrastText",
                       }}
                     >
-                      {card.icon}
+                      {feature.icon}
                     </Icon>
-                    <CardTitle
+                    <FeatureTitle
                       style={{ margin: "10px 0" }}
                       color={
-                        card.id % 2 === 0
+                        feature.id % 2 === 0
                           ? theme.palette.secondary.contrastText
                           : theme.palette.paper.contrastText
                       }
                     >
-                      {card.title}
-                    </CardTitle>
-                    <CardText
+                      {feature.title}
+                    </FeatureTitle>
+                    <FeatureText
                       color={
-                        card.id % 2 === 0
+                        feature.id % 2 === 0
                           ? theme.palette.secondary.contrastText
                           : theme.palette.paper.contrastText
                       }
                     >
-                      {card.desc}
-                    </CardText>
+                      {feature.desc}
+                    </FeatureText>
                   </CardContent>
                 </CardActionArea>
               </Card>

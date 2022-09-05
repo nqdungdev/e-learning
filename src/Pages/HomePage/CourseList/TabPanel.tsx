@@ -59,15 +59,13 @@ const TabPanel = () => {
 
   return (
     <Box sx={{ mx: { xs: "auto", md: "-1.5rem" } }}>
-      {
-        <Box sx={{ p: 3 }}>
-          <Slider {...settings}>
-            {courseByCatalog?.map((course) => {
-              return <CourseItem key={course.maKhoaHoc} course={course} />;
-            })}
-          </Slider>
-        </Box>
-      }
+      <Box sx={{ p: 3 }}>
+        <Slider {...settings}>
+          {courseByCatalog?.map((course) => {
+            return <CourseItem key={course.maKhoaHoc} course={course} />;
+          })}
+        </Slider>
+      </Box>
     </Box>
   );
 };

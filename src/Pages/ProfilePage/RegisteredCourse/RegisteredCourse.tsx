@@ -15,7 +15,7 @@ import {
   Paper,
 } from "@mui/material";
 import {
-  CardTitle,
+  FeatureTitle,
   Title,
 } from "_Playground/StyledComponents/HomePage/home.styled";
 import Placeholder200x150 from "Assets/img/Placeholder/200x150.jpg";
@@ -35,19 +35,19 @@ const RegisteredCourse = () => {
           <TableHead>
             <TableRow>
               <TableCell align="center">
-                <CardTitle>STT</CardTitle>
+                <FeatureTitle>STT</FeatureTitle>
               </TableCell>
               <TableCell align="left">
-                <CardTitle>Tên khóa học</CardTitle>
+                <FeatureTitle>Tên khóa học</FeatureTitle>
               </TableCell>
               <TableCell
                 align="right"
                 sx={{ display: { xs: "none", md: "table-cell" } }}
               >
-                <CardTitle>Hình ảnh</CardTitle>
+                <FeatureTitle>Hình ảnh</FeatureTitle>
               </TableCell>
               <TableCell align="center">
-                <CardTitle>Chi tiết</CardTitle>
+                <FeatureTitle>Chi tiết</FeatureTitle>
               </TableCell>
             </TableRow>
           </TableHead>

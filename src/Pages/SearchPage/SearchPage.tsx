@@ -63,7 +63,11 @@ const SearchPage = () => {
           <FilterListIcon />
 
           <FormControl
-            sx={{ mx: 3, width: "180px" }}
+            sx={{
+              mx: 3,
+              width: "180px",
+              display: { xs: "inline-flex", md: "none" },
+            }}
             size="small"
             color="secondary"
           >
@@ -98,6 +102,7 @@ const SearchPage = () => {
               })}
             </Select>
           </FormControl>
+
           <FormControl
             sx={{
               width: "180px",
@@ -135,11 +140,11 @@ const SearchPage = () => {
           </FormControl>
         </Stack>
 
-        <Grid container>
+        <Grid container columns={20}>
           <Grid
             item
             xs={0}
-            md={3}
+            md={4}
             sx={{ display: { xs: "none", md: "block" } }}
           >
             <Box
@@ -152,7 +157,7 @@ const SearchPage = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={9}>
+          <Grid item xs={20} md={16}>
             <SearchContent />
           </Grid>
         </Grid>

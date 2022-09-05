@@ -34,10 +34,15 @@ export const MenuItemText = styled(MenuItem)`
     background-color: ${theme.palette.secondary.main} !important;
     color: ${theme.palette.secondary.contrastText} !important;
   }
+  & > p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 //Course item
-export const CardTitle = styled.p<{ color?: string }>`
+export const FeatureTitle = styled.p<{ color?: string }>`
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -48,7 +53,7 @@ export const CardTitle = styled.p<{ color?: string }>`
   line-height: 1.8rem;
 `;
 
-export const CardText = styled.p<{ color?: string }>`
+export const FeatureText = styled.p<{ color?: string }>`
   font-size: 0.8rem;
   font-weight: 500;
   line-height: 1.6rem;

@@ -49,3 +49,10 @@ export interface RegisteredCourseDetail {
   ngayTao: string;
   danhGia: number;
 }
+
+export interface featuresData {
+  id: number;
+  title: string;
+  desc: string;
+  icon?: JSX.Element;
+}
