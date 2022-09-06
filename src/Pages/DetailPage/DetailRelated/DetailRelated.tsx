@@ -24,7 +24,8 @@ const DetailRelated = () => {
     if (course)
       dispatch(getCourseByCategory(course?.danhMucKhoaHoc.maDanhMucKhoahoc));
     return () => {};
-  }, [dispatch, course]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [course]);
 
   const settings: Settings = {
     dots: false,

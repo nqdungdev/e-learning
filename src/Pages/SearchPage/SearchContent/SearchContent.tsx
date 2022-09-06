@@ -23,9 +23,9 @@ const SearchContent = () => {
   const {
     courseByCatalog,
     courseListPaging,
-    isCourseListLoading,
+    isCourseByCatalogLoading,
     isCourseListPagingLoading,
-    errorCourseList,
+    errorCourseByCatalog,
     errorCourseListPaging,
   } = useSelector((state: RootState) => state.courseSlice);
 
@@ -49,11 +49,11 @@ const SearchContent = () => {
     queryParams.tenKhoaHoc,
   ]);
 
-  if (isCourseListLoading || isCourseListPagingLoading) {
+  if (isCourseByCatalogLoading || isCourseListPagingLoading) {
     return <LoadingAPI />;
   }
 
-  if (errorCourseList || errorCourseListPaging) {
+  if (errorCourseListPaging && errorCourseByCatalog) {
     return <ErrorAPI />;
   }
 

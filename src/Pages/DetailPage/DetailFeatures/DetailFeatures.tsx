@@ -48,7 +48,9 @@ const DetailFeatures = () => {
                 <Icon>{feature.icon}</Icon>
                 <Box ml={3}>
                   <FeatureTitle>{feature.title}</FeatureTitle>
-                  <FeatureText>{feature.desc}</FeatureText>
+                  <FeatureText style={{ textAlign: "justify" }}>
+                    {feature.desc}
+                  </FeatureText>
                 </Box>
               </Stack>
             </Grid>
