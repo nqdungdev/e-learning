@@ -61,9 +61,9 @@ const SearchAside = () => {
           size="small"
           color="secondary"
         >
-          <InputLabel id="category-select">Danh mục</InputLabel>
+          <InputLabel id="category-select-label">Danh mục</InputLabel>
           <Select
-            labelId="category-select"
+            labelId="category-select-label"
             id="category-select"
             value={category}
             label="Category"

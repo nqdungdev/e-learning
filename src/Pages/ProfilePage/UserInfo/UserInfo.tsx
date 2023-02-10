@@ -35,7 +35,6 @@ const UserInfo = () => {
   });
 
   const onSubmit = (values: RegisterValues) => {
-    console.log(values);
     setOpenConfirm(false);
     dispatch(putUpdateUser({ ...userInfo, ...values })).then(() => {
       dispatch(changeName());
@@ -45,6 +44,7 @@ const UserInfo = () => {
     setOpenUpdate(false);
     setReadOnly(true);
   };
+
   const onError = (error: FieldErrors<RegisterValues>) => {
     console.log(error);
   };

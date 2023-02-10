@@ -8,6 +8,7 @@ import HomeTemplate from "Templates/HomeTemplate/HomeTemplate";
 import LoginTemplate from "Templates/LoginTemplate/LoginTemplate";
 import ProtectedLogin from "Routes/ProtectedLogin";
 import ProtectedProfile from "Routes/ProtectedProfile";
+import ProtectedRegister from "Routes/ProtectedRegister";
 
 const HomePage = lazy(() => import("Pages/HomePage/HomePage"));
 const DetailPage = lazy(() => import("Pages/DetailPage/DetailPage"));
@@ -47,7 +48,15 @@ function App() {
                     </ProtectedLogin>
                   }
                 />
-                <Route path="register" element={<RegisterPage />} />
+
+                <Route
+                  path="register"
+                  element={
+                    <ProtectedRegister>
+                      <RegisterPage />
+                    </ProtectedRegister>
+                  }
+                />
               </Route>
               <Route path="*" element={<Navigate to={"/"} />} />
             </Routes>
